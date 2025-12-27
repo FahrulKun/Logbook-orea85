@@ -1,167 +1,204 @@
-# 📱 Komisi Treatment App
+# Catatan Harian Komisi Treatment - Vanilla JavaScript
 
-Aplikasi pencatatan komisi treatment therapist yang modern dengan fitur PWA (Progressive Web App).
+Aplikasi web untuk pencatatan komisi treatment terapis yang dibangun dengan Vanilla JavaScript, HTML, dan CSS. Aplikasi ini dirancang khusus untuk deployment di Vercel tanpa dependensi framework.
 
-## 🌟 Fitur Utama
+## 🚀 Fitur
 
-### 📝 Manajemen Komisi
-- **Input Data**: Form lengkap dengan pilihan treatment
-- **Real-time Clock**: Jam digital WIB (GMT+7) yang update otomatis
-- **Auto Date Management**: Pergantian tanggal tengah malam otomatis
-- **Tracking Waktu**: Mencatat waktu input setiap entry
-- **35 Treatment Options**: Lengkap dengan harga komisi yang sudah ditetapkan
+### 📱 Progressive Web App (PWA)
+- Installable pada mobile dan desktop
+- Offline functionality dengan service worker
+- Responsive design untuk semua perangkat
+- Splash screens dan app icons
 
-### 📊 Dashboard & Analytics
-- **Weekly Statistics**: Total komisi mingguan dengan grafik
-- **Daily Logs**: Tabel data harian dengan filter dan sorting
-- **Export Data**: Export ke CSV dan share ke WhatsApp/Telegram
-- **Delete Management**: Hapus data dengan konfirmasi
-- **Search & Filter**: Pencarian data berdasarkan tanggal dan treatment
+### ⏰ Waktu & Tanggal
+- Real-time clock dengan zona waktu WIB (GMT+7)
+- Auto-update tanggal tengah malam
+- Record waktu input untuk setiap entry
+- Timezone handling yang akurat
 
-### 🎨 PWA Features
-- **Install to Home Screen**: Bisa diinstall sebagai aplikasi
-- **Offline Support**: Berfungsi tanpa koneksi internet
-- **Push Notifications**: Notifikasi untuk pembaruan
-- **Cache Management**: Optimasi loading dengan cache strategy
-- **Responsive Design**: Berfungsi di semua device
+### 📊 Data Management
+- 35+ jenis treatment dengan harga dan komisi otomatis
+- Input data yang mudah dan cepat
+- Statistik harian dan bulanan
+- Data persistence dengan localStorage
+- Auto-calculate komisi (30% dari harga)
 
-### 🌐 Teknologi
-- **Framework**: Next.js 15 dengan App Router
-- **Styling**: Tailwind CSS dengan shadcn/ui components
-- **Language**: TypeScript untuk type safety
-- **State Management**: React hooks dengan localStorage
-- **Icons**: Custom PWA icons dengan design modern
-- **Timezone**: WIB (GMT+7) untuk akurasi waktu Indonesia
+### 📈 Statistik & Analisis
+- Total treatment hari ini
+- Total komisi hari ini
+- Total treatment bulan ini
+- Total komisi bulan ini
+- Most frequent treatment dengan marquee effect
 
-## 📱 Treatment List
+### 💾 Export & Share
+- Share data ke WhatsApp
+- Share data ke Telegram
+- Copy to clipboard
+- Export ke CSV
+- Preview data sebelum share
 
-### 🪑 Chair Refleksi
-- 1 jam: Rp 30.000
-- 1,5 jam: Rp 45.000
-- 2 jam: Rp 60.000
+### 🎨 UI/UX Design
+- Luxury dan minimalist design
+- Smooth animations dan transitions
+- Dark mode support
+- Responsive design
+- Loading states dan error handling
+- Toast notifications
 
-### 💆 Full Body (FB)
-- FB 1,5 jam: Rp 52.500
-- FB 2 jam: Rp 67.500
-- FB + Lulur: 1,5 jam: Rp 67.500 | 2 jam: Rp 82.500
-- FB + Totok Wajah: 1,5 jam: Rp 61.500 | 2 jam: Rp 76.500
-- FB + Kerokan: 1,5 jam: Rp 61.500 | 2 jam: Rp 76.500
-- FB + Refleksi: 1,5 jam: Rp 61.500 | 2 jam: Rp 76.500
+### 🗑️ Data Management
+- Delete confirmation popup
+- Scroll position preservation
+- Form validation
+- Auto-fill harga dan komisi
 
-### 🎯 Sport Massage
-- 1 jam: Rp 45.000
-- 1,5 jam: Rp 58.500
+## 🛠️ Teknologi
 
-### 🤰 Prenatal
-- Prenatal 1,5 jam: Rp 67.500
-- Prenatal 2 jam: Rp 76.500
-- Prenatal + Lulur: 1,5 jam: Rp 75.000 | 2 jam: Rp 93.750
+- **Frontend**: Vanilla JavaScript (ES6+)
+- **Styling**: Tailwind CSS (CDN)
+- **Storage**: LocalStorage API
+- **PWA**: Service Worker + Web App Manifest
+- **Deployment**: Vercel (Static Site)
 
-### 👶 Post Natal & Laktasi
-- Post Natal 1 jam: Rp 52.500
-- Pijat Laktasi 30 menit: Rp 45.000
-- Bengkung 30 menit: Rp 37.500
-- Post Natal Paket 2 jam: Rp 127.500
+## 📁 Struktur Proyek
 
-### 💆 Specialized Treatments
-- Brazilian Lympatic: 1 jam: Rp 157.750 | 1,5 jam: Rp 228.750
-- Facial Lympatic: 30 menit: Rp 52.500
-- Manual Lympatic: 1 jam: Rp 116.250
-
-### ➕ Add-on Services
-- Add on FB: 30 menit: Rp 16.500 | 1 jam: Rp 33.500
-- Add on Lulur: 30 menit: Rp 30.000
-- Add on Totok Wajah: 30 menit: Rp 24.000
-- Add on Kerokan: 30 menit: Rp 24.000
-- Add on Refleksi FB: 30 menit: Rp 24.000
-- Add on Refleksi Chair: 30 menit: Rp 18.000
-
-## 🚀 Cara Install & Penggunaan
-
-### 1. **Install ke Home Screen**
-1. Buka aplikasi di browser (Chrome, Edge, Firefox, Safari)
-2. Klik tombol "Install" atau "Install Aplikasi"
-3. Aplikasi akan terinstall di home screen device
-4. Icon aplikasi akan muncul di home screen
-
-### 2. **Akses Offline**
-1. Aplikasi akan berfungsi tanpa koneksi internet
-2. Data tersimpan di browser device
-3. Sinkronisasi otomatis saat koneksi tersedia
-
-### 3. **PWA Features**
-- **App Shortcuts**: Akses cepat ke fitur utama
-- **Background Sync**: Data sinkron di background
-- **Push Notifications**: Notifikasi untuk update penting
-
-## 📊 Data Management
-
-### **Export Options**
-- **CSV Export**: Unduh data dalam format CSV
-- **WhatsApp Share**: Bagikan data ke WhatsApp
-- **Telegram Share**: Bagikan data ke Telegram
-- **Copy to Clipboard**: Salin data ke clipboard
-
-### **Security & Privacy**
-- Data tersimpan lokal di browser device
-- Tidak ada data yang dikirim ke server eksternal
-- Full privacy compliance
-
-## 🛠️ Developer Information
-
-- **Developer**: OREA 85
-- **Version**: 1.0.0
-- **License**: Private
-- **Contact**: Instagram: @orea_85
-- **GitHub**: https://github.com/orea-85/komisi-treatment-app
-
-## 📱 Cara Deployment
-
-### **Development**
-```bash
-# Clone repository
-git clone https://github.com/orea-85/komisi-treatment-app.git
-
-# Install dependencies
-cd komisi-treatment-app
-npm install
-
-# Run development server
-npm run dev
+```
+logbook-orea85-vanilla/
+├── index.html              # Halaman utama
+├── css/
+│   └── style.css          # Custom CSS dan animations
+├── js/
+│   └── app.js             # Main application logic
+├── icons/                 # PWA icons (8 sizes)
+├── manifest.json          # PWA manifest
+├── service-worker.js      # Service worker untuk offline
+├── vercel.json           # Vercel configuration
+├── package.json          # Project metadata
+└── README.md             # Documentation
 ```
 
-### **Production**
+## 🚀 Cara Deployment ke Vercel
+
+### 1. Upload ke GitHub
 ```bash
-# Build aplikasi
-npm run build
+# Inisialisasi git repository
+git init
+git add .
+git commit -m "Initial commit - Vanilla JS Treatment App"
 
-# Deploy ke Vercel (recommended)
-npm install -g vercel
-vercel --prod
-
-# Atau deploy ke Netlify
-npm install -g netlify
-netlify deploy --prod --dir=.next
+# Add remote dan push
+git remote add origin https://github.com/FahrulKun/Logbook-orea85.git
+git branch -M main
+git push -u origin main
 ```
 
-## 📄 Fitur PWA Compliance
+### 2. Deploy ke Vercel
+1. Buka [vercel.com](https://vercel.com)
+2. Sign in dengan GitHub
+3. Click "New Project"
+4. Pilih repository `Logbook-orea85`
+5. Vercel akan otomatis mendeteksi sebagai static site
+6. Click "Deploy"
 
-✅ **Install Prompt**: Muncul di browser yang mendukung PWA
-✅ **Service Worker**: Background sync dan cache management
-✅ **Manifest Lengkap**: Semua metadata PWA yang diperlukan
-✅ **Icons**: Semua ukuran yang diperlukan App Store
-✅ **Splash Screens**: Untuk berbagai orientasi device
-✅ **Offline Fallback**: Halaman informatif saat offline
+### 3. Konfigurasi Kustom (Opsional)
+- Custom domain: Settings → Domains
+- Environment variables: Settings → Environment Variables
+- Auto deployment: Settings → Git
 
-## 🎯 Target Platform
+## 📱 PWA Installation
 
-- **Desktop**: Browser modern dengan PWA support
-- **Mobile**: Install sebagai aplikasi home screen
-- **Tablet**: Responsive design untuk semua ukuran
-- **Progressive**: Meningkat dari web ke native app experience
+### Android
+1. Buka aplikasi di Chrome
+2. Click "Add to Home Screen" (3 dots → Add to Home Screen)
+3. Confirm installation
+
+### iOS
+1. Buka aplikasi di Safari
+2. Click Share button
+3. Scroll down dan click "Add to Home Screen"
+4. Confirm installation
+
+### Desktop
+1. Buka aplikasi di Chrome/Edge
+2. Click "Install" button di address bar
+3. Confirm installation
+
+## 🎯 Jenis Treatment
+
+### Hair Services
+- Haircut 1 Jam : 35.000
+- Haircut 30 Menit : 25.000
+- Hairdo : 35.000
+- Hairdo + Creambath : 45.000
+- Creambath : 30.000
+- Creambath + Hair Mask : 40.000
+- Smoothing : 60.000
+- Smoothing + Hair Mask : 75.000
+- Kerating : 70.000
+- Kerating + Hair Mask : 85.000
+- Coloring : 50.000
+- Coloring + Creambath : 65.000
+- Highlighting : 80.000
+- Highlighting + Creambath : 95.000
+- Hair Extension : 200.000
+
+### Facial Services
+- Facial Basic : 40.000
+- Facial Premium : 60.000
+- Facial + Mask : 55.000
+
+### Nail Services
+- Manicure : 25.000
+- Manicure + Pedicure : 45.000
+- Pedicure : 30.000
+- Nail Art : 35.000
+
+### Massage Services
+- Massage 1 Jam : 50.000
+- Massage 1,5 Jam : 65.000
+- Massage 2 Jam : 80.000
+- Sport Massage 1 Jam : 45.000
+- Sport Massage 1,5 Jam : 58.500
+- Body Scrub : 40.000
+- Body Scrub + Massage : 70.000
+- Lulur : 35.000
+- Lulur + Massage : 65.000
+- Reflexy : 35.000
+
+### Special Services
+- Bridal Package : 150.000
+- Bridal Package + Makeup : 200.000
+- Makeup Party : 80.000
+- Makeup Wedding : 120.000
+- Eyelash Extension : 100.000
+- Eyebrow Embroidery : 150.000
+- Waxing : 30.000
+
+## 🔧 Konfigurasi
+
+### WIB Timezone
+Aplikasi menggunakan zona waktu WIB (GMT+7) untuk semua fungsi tanggal dan waktu.
+
+### Komisi Otomatis
+Komisi dihitung otomatis sebesar 30% dari harga treatment.
+
+### Data Storage
+Data disimpan di browser localStorage dan akan persist antar session.
+
+## 🌐 Browser Support
+
+- Chrome 80+
+- Firefox 75+
+- Safari 13+
+- Edge 80+
+
+## 📄 License
+
+MIT License - OREA 85
+
+## 🤝 Support
+
+Instagram: @OREA_85
 
 ---
 
-📱 **Dikembangkan dengan ❤️ oleh OREA 85**
-📞 **Untuk therapist Indonesia yang modern dan produktif**# Logbook-orea85
-# Logbook-orea85jvsc
+**OREA 85 - Luxury Treatment Center**

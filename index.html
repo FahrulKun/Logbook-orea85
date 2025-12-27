@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catatan Harian Komisi Treatment</title>
+    <meta name="description" content="Aplikasi pencatatan komisi treatment terapis">
+    <meta name="theme-color" content="#1f2937">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Komisi Treatment">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- PWA Icons -->
+    <link rel="apple-touch-icon" href="/icons/icon-152x152.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/icons/icon-512x512.png">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f8fafc',
+                            500: '#1f2937',
+                            600: '#111827',
+                            700: '#030712',
+                            900: '#030712',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'scale-in': 'scaleIn 0.3s ease-out',
+                        'marquee': 'marquee 20s linear infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        scaleIn: {
+                            '0%': { transform: 'scale(0.95)', opacity: '0' },
+                            '100%': { transform: 'scale(1)', opacity: '1' },
+                        },
+                        marquee: {
+                            '0%': { transform: 'translateX(100%)' },
+                            '100%': { transform: 'translateX(-100%)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="bg-gray-50 text-gray-900 min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-primary-600 to-primary-700 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-2xl font-bold">Catatan Harian Komisi Treatment</h1>
+                    <p class="text-sm opacity-90">OREA 85 - Luxury Treatment Center</p>
+                </div>
+                <div class="text-right">
+                    <div id="digitalClock" class="text-xl font-mono font-bold"></div>
+                    <div id="currentDate" class="text-sm opacity-90"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-6">
+        <!-- Input Form -->
+        <section class="bg-white rounded-xl shadow-lg p-6 mb-6 animate-fade-in">
+            <h2 class="text-xl font-bold mb-4 text-primary-700">Input Data Treatment</h2>
+            <form id="treatmentForm" class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Nama Terapis</label>
+                        <input type="text" id="therapistName" required
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Tanggal</label>
+                        <input type="date" id="treatmentDate" required
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium mb-2">Jenis Treatment</label>
+                    <select id="treatmentType" required
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                        <option value="">Pilih Treatment</option>
+                        <option value="Haircut 1 Jam : 35.000">Haircut 1 Jam : 35.000</option>
+                        <option value="Haircut 30 Menit : 25.000">Haircut 30 Menit : 25.000</option>
+                        <option value="Hairdo : 35.000">Hairdo : 35.000</option>
+                        <option value="Hairdo + Creambath : 45.000">Hairdo + Creambath : 45.000</option>
+                        <option value="Creambath : 30.000">Creambath : 30.000</option>
+                        <option value="Creambath + Hair Mask : 40.000">Creambath + Hair Mask : 40.000</option>
+                        <option value="Smoothing : 60.000">Smoothing : 60.000</option>
+                        <option value="Smoothing + Hair Mask : 75.000">Smoothing + Hair Mask : 75.000</option>
+                        <option value="Kerating : 70.000">Kerating : 70.000</option>
+                        <option value="Kerating + Hair Mask : 85.000">Kerating + Hair Mask : 85.000</option>
+                        <option value="Coloring : 50.000">Coloring : 50.000</option>
+                        <option value="Coloring + Creambath : 65.000">Coloring + Creambath : 65.000</option>
+                        <option value="Highlighting : 80.000">Highlighting : 80.000</option>
+                        <option value="Highlighting + Creambath : 95.000">Highlighting + Creambath : 95.000</option>
+                        <option value="Facial Basic : 40.000">Facial Basic : 40.000</option>
+                        <option value="Facial Premium : 60.000">Facial Premium : 60.000</option>
+                        <option value="Facial + Mask : 55.000">Facial + Mask : 55.000</option>
+                        <option value="Manicure : 25.000">Manicure : 25.000</option>
+                        <option value="Manicure + Pedicure : 45.000">Manicure + Pedicure : 45.000</option>
+                        <option value="Pedicure : 30.000">Pedicure : 30.000</option>
+                        <option value="Massage 1 Jam : 50.000">Massage 1 Jam : 50.000</option>
+                        <option value="Massage 1,5 Jam : 65.000">Massage 1,5 Jam : 65.000</option>
+                        <option value="Massage 2 Jam : 80.000">Massage 2 Jam : 80.000</option>
+                        <option value="Sport Massage 1 Jam : 45.000">Sport Massage 1 Jam : 45.000</option>
+                        <option value="Sport Massage 1,5 Jam : 58.500">Sport Massage 1,5 Jam : 58.500</option>
+                        <option value="Body Scrub : 40.000">Body Scrub : 40.000</option>
+                        <option value="Body Scrub + Massage : 70.000">Body Scrub + Massage : 70.000</option>
+                        <option value="Lulur : 35.000">Lulur : 35.000</option>
+                        <option value="Lulur + Massage : 65.000">Lulur + Massage : 65.000</option>
+                        <option value="Bridal Package : 150.000">Bridal Package : 150.000</option>
+                        <option value="Bridal Package + Makeup : 200.000">Bridal Package + Makeup : 200.000</option>
+                        <option value="Makeup Party : 80.000">Makeup Party : 80.000</option>
+                        <option value="Makeup Wedding : 120.000">Makeup Wedding : 120.000</option>
+                        <option value="Eyelash Extension : 100.000">Eyelash Extension : 100.000</option>
+                        <option value="Eyebrow Embroidery : 150.000">Eyebrow Embroidery : 150.000</option>
+                        <option value="Hair Extension : 200.000">Hair Extension : 200.000</option>
+                        <option value="Nail Art : 35.000">Nail Art : 35.000</option>
+                        <option value="Waxing : 30.000">Waxing : 30.000</option>
+                        <option value="Reflexy : 35.000">Reflexy : 35.000</option>
+                    </select>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Harga (Rp)</label>
+                        <input type="number" id="price" required
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Komisi (Rp)</label>
+                        <input type="number" id="commission" required
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium mb-2">Catatan</label>
+                    <textarea id="notes" rows="2"
+                              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"></textarea>
+                </div>
+                
+                <div class="flex gap-2">
+                    <button type="submit" 
+                            class="bg-primary-600 text-white px-6 py-2 rounded-lg hover:bg-primary-700 transition-colors">
+                        Simpan Data
+                    </button>
+                    <button type="button" id="clearForm"
+                            class="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition-colors">
+                        Clear
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Statistics Cards -->
+        <section class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+            <div class="bg-white rounded-xl shadow-lg p-6 animate-scale-in">
+                <h3 class="text-sm font-medium text-gray-600">Total Treatment Hari Ini</h3>
+                <p id="todayTotal" class="text-2xl font-bold text-primary-600">0</p>
+            </div>
+            <div class="bg-white rounded-xl shadow-lg p-6 animate-scale-in">
+                <h3 class="text-sm font-medium text-gray-600">Total Komisi Hari Ini</h3>
+                <p id="todayCommission" class="text-2xl font-bold text-green-600">Rp 0</p>
+            </div>
+            <div class="bg-white rounded-xl shadow-lg p-6 animate-scale-in">
+                <h3 class="text-sm font-medium text-gray-600">Total Treatment Bulan Ini</h3>
+                <p id="monthTotal" class="text-2xl font-bold text-primary-600">0</p>
+            </div>
+            <div class="bg-white rounded-xl shadow-lg p-6 animate-scale-in">
+                <h3 class="text-sm font-medium text-gray-600">Total Komisi Bulan Ini</h3>
+                <p id="monthCommission" class="text-2xl font-bold text-green-600">Rp 0</p>
+            </div>
+        </section>
+
+        <!-- Marquee Most Frequent Treatment -->
+        <section class="bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-xl shadow-lg p-4 mb-6 overflow-hidden">
+            <div class="flex items-center">
+                <span class="text-sm font-medium mr-4 whitespace-nowrap">Treatment Paling Sering:</span>
+                <div class="overflow-hidden flex-1">
+                    <div id="marqueeText" class="whitespace-nowrap animate-marquee">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Data Table -->
+        <section class="bg-white rounded-xl shadow-lg p-6 animate-fade-in">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold text-primary-700">Data Treatment</h2>
+                <div class="flex gap-2">
+                    <button id="shareBtn" 
+                            class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                        Share Data
+                    </button>
+                    <button id="exportBtn" 
+                            class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                        Export CSV
+                    </button>
+                </div>
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full table-auto">
+                    <thead>
+                        <tr class="border-b">
+                            <th class="text-left p-2">No</th>
+                            <th class="text-left p-2">Tanggal</th>
+                            <th class="text-left p-2">Waktu Input</th>
+                            <th class="text-left p-2">Terapis</th>
+                            <th class="text-left p-2">Treatment</th>
+                            <th class="text-right p-2">Harga</th>
+                            <th class="text-right p-2">Komisi</th>
+                            <th class="text-left p-2">Catatan</th>
+                            <th class="text-center p-2">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dataTableBody">
+                        <!-- Will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-primary-900 text-white py-4 mt-auto">
+        <div class="container mx-auto px-4">
+            <div class="text-center">
+                <div class="overflow-hidden mb-2">
+                    <div class="whitespace-nowrap animate-marquee text-yellow-400">
+                        JANGAN LUPA FOLLOW INSTAGRAM OREA_85 • JANGAN LUPA FOLLOW INSTAGRAM OREA_85 • JANGAN LUPA FOLLOW INSTAGRAM OREA_85 • 
+                    </div>
+                </div>
+                <p class="text-sm">© 2024 OREA 85 - All Rights Reserved</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Share Modal -->
+    <div id="shareModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl max-w-md w-full p-6 animate-scale-in">
+            <h3 class="text-xl font-bold mb-4">Share Data</h3>
+            <div id="sharePreview" class="mb-4 p-4 bg-gray-50 rounded-lg max-h-60 overflow-y-auto">
+                <!-- Share preview will be populated here -->
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+                <button id="shareWhatsApp" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
+                    WhatsApp
+                </button>
+                <button id="shareTelegram" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                    Telegram
+                </button>
+                <button id="copyData" class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700">
+                    Copy
+                </button>
+                <button id="closeShareModal" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+                    Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl max-w-md w-full p-6 animate-scale-in">
+            <h3 class="text-xl font-bold mb-4">Konfirmasi Hapus</h3>
+            <p id="deleteMessage" class="mb-6">
+                <!-- Delete message will be populated here -->
+            </p>
+            <div class="flex gap-2">
+                <button id="confirmDelete" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+                    Hapus
+                </button>
+                <button id="cancelDelete" class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700">
+                    Batal
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed top-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg hidden z-50 animate-scale-in">
+        <span id="toastMessage"></span>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/js/app.js"></script>
+</body>
+</html>
