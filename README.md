@@ -1,141 +1,166 @@
-# 🚀 Welcome to Z.ai Code Scaffold
+# 📱 Komisi Treatment App
 
-A modern, production-ready web application scaffold powered by cutting-edge technologies, designed to accelerate your development with [Z.ai](https://chat.z.ai)'s AI-powered coding assistance.
+Aplikasi pencatatan komisi treatment therapist yang modern dengan fitur PWA (Progressive Web App).
 
-## ✨ Technology Stack
+## 🌟 Fitur Utama
 
-This scaffold provides a robust foundation built with:
+### 📝 Manajemen Komisi
+- **Input Data**: Form lengkap dengan pilihan treatment
+- **Real-time Clock**: Jam digital WIB (GMT+7) yang update otomatis
+- **Auto Date Management**: Pergantian tanggal tengah malam otomatis
+- **Tracking Waktu**: Mencatat waktu input setiap entry
+- **35 Treatment Options**: Lengkap dengan harga komisi yang sudah ditetapkan
 
-### 🎯 Core Framework
-- **⚡ Next.js 15** - The React framework for production with App Router
-- **📘 TypeScript 5** - Type-safe JavaScript for better developer experience
-- **🎨 Tailwind CSS 4** - Utility-first CSS framework for rapid UI development
+### 📊 Dashboard & Analytics
+- **Weekly Statistics**: Total komisi mingguan dengan grafik
+- **Daily Logs**: Tabel data harian dengan filter dan sorting
+- **Export Data**: Export ke CSV dan share ke WhatsApp/Telegram
+- **Delete Management**: Hapus data dengan konfirmasi
+- **Search & Filter**: Pencarian data berdasarkan tanggal dan treatment
 
-### 🧩 UI Components & Styling
-- **🧩 shadcn/ui** - High-quality, accessible components built on Radix UI
-- **🎯 Lucide React** - Beautiful & consistent icon library
-- **🌈 Framer Motion** - Production-ready motion library for React
-- **🎨 Next Themes** - Perfect dark mode in 2 lines of code
+### 🎨 PWA Features
+- **Install to Home Screen**: Bisa diinstall sebagai aplikasi
+- **Offline Support**: Berfungsi tanpa koneksi internet
+- **Push Notifications**: Notifikasi untuk pembaruan
+- **Cache Management**: Optimasi loading dengan cache strategy
+- **Responsive Design**: Berfungsi di semua device
 
-### 📋 Forms & Validation
-- **🎣 React Hook Form** - Performant forms with easy validation
-- **✅ Zod** - TypeScript-first schema validation
+### 🌐 Teknologi
+- **Framework**: Next.js 15 dengan App Router
+- **Styling**: Tailwind CSS dengan shadcn/ui components
+- **Language**: TypeScript untuk type safety
+- **State Management**: React hooks dengan localStorage
+- **Icons**: Custom PWA icons dengan design modern
+- **Timezone**: WIB (GMT+7) untuk akurasi waktu Indonesia
 
-### 🔄 State Management & Data Fetching
-- **🐻 Zustand** - Simple, scalable state management
-- **🔄 TanStack Query** - Powerful data synchronization for React
-- **🌐 Axios** - Promise-based HTTP client
+## 📱 Treatment List
 
-### 🗄️ Database & Backend
-- **🗄️ Prisma** - Next-generation Node.js and TypeScript ORM
-- **🔐 NextAuth.js** - Complete open-source authentication solution
+### 🪑 Chair Refleksi
+- 1 jam: Rp 30.000
+- 1,5 jam: Rp 45.000
+- 2 jam: Rp 60.000
 
-### 🎨 Advanced UI Features
-- **📊 TanStack Table** - Headless UI for building tables and datagrids
-- **🖱️ DND Kit** - Modern drag and drop toolkit for React
-- **📊 Recharts** - Redefined chart library built with React and D3
-- **🖼️ Sharp** - High performance image processing
+### 💆 Full Body (FB)
+- FB 1,5 jam: Rp 52.500
+- FB 2 jam: Rp 67.500
+- FB + Lulur: 1,5 jam: Rp 67.500 | 2 jam: Rp 82.500
+- FB + Totok Wajah: 1,5 jam: Rp 61.500 | 2 jam: Rp 76.500
+- FB + Kerokan: 1,5 jam: Rp 61.500 | 2 jam: Rp 76.500
+- FB + Refleksi: 1,5 jam: Rp 61.500 | 2 jam: Rp 76.500
 
-### 🌍 Internationalization & Utilities
-- **🌍 Next Intl** - Internationalization library for Next.js
-- **📅 Date-fns** - Modern JavaScript date utility library
-- **🪝 ReactUse** - Collection of essential React hooks for modern development
+### 🎯 Sport Massage
+- 1 jam: Rp 45.000
+- 1,5 jam: Rp 58.500
 
-## 🎯 Why This Scaffold?
+### 🤰 Prenatal
+- Prenatal 1,5 jam: Rp 67.500
+- Prenatal 2 jam: Rp 76.500
+- Prenatal + Lulur: 1,5 jam: Rp 75.000 | 2 jam: Rp 93.750
 
-- **🏎️ Fast Development** - Pre-configured tooling and best practices
-- **🎨 Beautiful UI** - Complete shadcn/ui component library with advanced interactions
-- **🔒 Type Safety** - Full TypeScript configuration with Zod validation
-- **📱 Responsive** - Mobile-first design principles with smooth animations
-- **🗄️ Database Ready** - Prisma ORM configured for rapid backend development
-- **🔐 Auth Included** - NextAuth.js for secure authentication flows
-- **📊 Data Visualization** - Charts, tables, and drag-and-drop functionality
-- **🌍 i18n Ready** - Multi-language support with Next Intl
-- **🚀 Production Ready** - Optimized build and deployment settings
-- **🤖 AI-Friendly** - Structured codebase perfect for AI assistance
+### 👶 Post Natal & Laktasi
+- Post Natal 1 jam: Rp 52.500
+- Pijat Laktasi 30 menit: Rp 45.000
+- Bengkung 30 menit: Rp 37.500
+- Post Natal Paket 2 jam: Rp 127.500
 
-## 🚀 Quick Start
+### 💆 Specialized Treatments
+- Brazilian Lympatic: 1 jam: Rp 157.750 | 1,5 jam: Rp 228.750
+- Facial Lympatic: 30 menit: Rp 52.500
+- Manual Lympatic: 1 jam: Rp 116.250
 
+### ➕ Add-on Services
+- Add on FB: 30 menit: Rp 16.500 | 1 jam: Rp 33.500
+- Add on Lulur: 30 menit: Rp 30.000
+- Add on Totok Wajah: 30 menit: Rp 24.000
+- Add on Kerokan: 30 menit: Rp 24.000
+- Add on Refleksi FB: 30 menit: Rp 24.000
+- Add on Refleksi Chair: 30 menit: Rp 18.000
+
+## 🚀 Cara Install & Penggunaan
+
+### 1. **Install ke Home Screen**
+1. Buka aplikasi di browser (Chrome, Edge, Firefox, Safari)
+2. Klik tombol "Install" atau "Install Aplikasi"
+3. Aplikasi akan terinstall di home screen device
+4. Icon aplikasi akan muncul di home screen
+
+### 2. **Akses Offline**
+1. Aplikasi akan berfungsi tanpa koneksi internet
+2. Data tersimpan di browser device
+3. Sinkronisasi otomatis saat koneksi tersedia
+
+### 3. **PWA Features**
+- **App Shortcuts**: Akses cepat ke fitur utama
+- **Background Sync**: Data sinkron di background
+- **Push Notifications**: Notifikasi untuk update penting
+
+## 📊 Data Management
+
+### **Export Options**
+- **CSV Export**: Unduh data dalam format CSV
+- **WhatsApp Share**: Bagikan data ke WhatsApp
+- **Telegram Share**: Bagikan data ke Telegram
+- **Copy to Clipboard**: Salin data ke clipboard
+
+### **Security & Privacy**
+- Data tersimpan lokal di browser device
+- Tidak ada data yang dikirim ke server eksternal
+- Full privacy compliance
+
+## 🛠️ Developer Information
+
+- **Developer**: OREA 85
+- **Version**: 1.0.0
+- **License**: Private
+- **Contact**: Instagram: @orea_85
+- **GitHub**: https://github.com/orea-85/komisi-treatment-app
+
+## 📱 Cara Deployment
+
+### **Development**
 ```bash
+# Clone repository
+git clone https://github.com/orea-85/komisi-treatment-app.git
+
 # Install dependencies
+cd komisi-treatment-app
 npm install
 
-# Start development server
+# Run development server
 npm run dev
+```
 
-# Build for production
+### **Production**
+```bash
+# Build aplikasi
 npm run build
 
-# Start production server
-npm start
+# Deploy ke Vercel (recommended)
+npm install -g vercel
+vercel --prod
+
+# Atau deploy ke Netlify
+npm install -g netlify
+netlify deploy --prod --dir=.next
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to see your application running.
+## 📄 Fitur PWA Compliance
 
-## 🤖 Powered by Z.ai
+✅ **Install Prompt**: Muncul di browser yang mendukung PWA
+✅ **Service Worker**: Background sync dan cache management
+✅ **Manifest Lengkap**: Semua metadata PWA yang diperlukan
+✅ **Icons**: Semua ukuran yang diperlukan App Store
+✅ **Splash Screens**: Untuk berbagai orientasi device
+✅ **Offline Fallback**: Halaman informatif saat offline
 
-This scaffold is optimized for use with [Z.ai](https://chat.z.ai) - your AI assistant for:
+## 🎯 Target Platform
 
-- **💻 Code Generation** - Generate components, pages, and features instantly
-- **🎨 UI Development** - Create beautiful interfaces with AI assistance  
-- **🔧 Bug Fixing** - Identify and resolve issues with intelligent suggestions
-- **📝 Documentation** - Auto-generate comprehensive documentation
-- **🚀 Optimization** - Performance improvements and best practices
-
-Ready to build something amazing? Start chatting with Z.ai at [chat.z.ai](https://chat.z.ai) and experience the future of AI-powered development!
-
-## 📁 Project Structure
-
-```
-src/
-├── app/                 # Next.js App Router pages
-├── components/          # Reusable React components
-│   └── ui/             # shadcn/ui components
-├── hooks/              # Custom React hooks
-└── lib/                # Utility functions and configurations
-```
-
-## 🎨 Available Features & Components
-
-This scaffold includes a comprehensive set of modern web development tools:
-
-### 🧩 UI Components (shadcn/ui)
-- **Layout**: Card, Separator, Aspect Ratio, Resizable Panels
-- **Forms**: Input, Textarea, Select, Checkbox, Radio Group, Switch
-- **Feedback**: Alert, Toast (Sonner), Progress, Skeleton
-- **Navigation**: Breadcrumb, Menubar, Navigation Menu, Pagination
-- **Overlay**: Dialog, Sheet, Popover, Tooltip, Hover Card
-- **Data Display**: Badge, Avatar, Calendar
-
-### 📊 Advanced Data Features
-- **Tables**: Powerful data tables with sorting, filtering, pagination (TanStack Table)
-- **Charts**: Beautiful visualizations with Recharts
-- **Forms**: Type-safe forms with React Hook Form + Zod validation
-
-### 🎨 Interactive Features
-- **Animations**: Smooth micro-interactions with Framer Motion
-- **Drag & Drop**: Modern drag-and-drop functionality with DND Kit
-- **Theme Switching**: Built-in dark/light mode support
-
-### 🔐 Backend Integration
-- **Authentication**: Ready-to-use auth flows with NextAuth.js
-- **Database**: Type-safe database operations with Prisma
-- **API Client**: HTTP requests with Axios + TanStack Query
-- **State Management**: Simple and scalable with Zustand
-
-### 🌍 Production Features
-- **Internationalization**: Multi-language support with Next Intl
-- **Image Optimization**: Automatic image processing with Sharp
-- **Type Safety**: End-to-end TypeScript with Zod validation
-- **Essential Hooks**: 100+ useful React hooks with ReactUse for common patterns
-
-## 🤝 Get Started with Z.ai
-
-1. **Clone this scaffold** to jumpstart your project
-2. **Visit [chat.z.ai](https://chat.z.ai)** to access your AI coding assistant
-3. **Start building** with intelligent code generation and assistance
-4. **Deploy with confidence** using the production-ready setup
+- **Desktop**: Browser modern dengan PWA support
+- **Mobile**: Install sebagai aplikasi home screen
+- **Tablet**: Responsive design untuk semua ukuran
+- **Progressive**: Meningkat dari web ke native app experience
 
 ---
 
-Built with ❤️ for the developer community. Supercharged by [Z.ai](https://chat.z.ai) 🚀
+📱 **Dikembangkan dengan ❤️ oleh OREA 85**
+📞 **Untuk therapist Indonesia yang modern dan produktif**# Logbook-orea85
