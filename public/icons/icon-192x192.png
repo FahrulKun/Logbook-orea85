@@ -1,0 +1,57 @@
+<svg width=" 	
+" height="" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient 	
+" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d97706;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="iconGradient 	
+" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f0f0f0;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width=" 	
+" height="" rx=" 	
+" fill="url(#bgGradient 	
+)"/>
+  
+  <!-- Massage symbol -->
+  <g transform="translate( 	
+, )">
+    <!-- Body outline -->
+    <rect x="- 	
+" y="-" width=" 	
+" height="" rx=" 	
+" fill="white"/>
+    
+    <!-- Hands -->
+    <rect x="- 	
+" y="-" width=" 	
+" height="" rx=" 	
+" fill="white"/>
+    <rect x="- 	
+" y="-" width=" 	
+" height="" rx=" 	
+" fill="white"/>
+    
+    <!-- Center circle for focus -->
+    <circle cx="0" cy="0" r=" 	
+" fill="url(#iconGradient 	
+)" opacity="0.3"/>
+    
+    <!-- Sparkles -->
+    <circle cx=" 	
+" cy="-" r=" 	
+" fill="white" opacity="0.9"/>
+    <circle cx=" 	
+" y="-" r=" 	
+" fill="white" opacity="0.8"/>
+    <circle cx=" 	
+" y="-" r=" 	
+" fill="white" opacity="0.7"/>
+  </g>
+</svg>
