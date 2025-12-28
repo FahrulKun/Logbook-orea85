@@ -1,34 +1,45 @@
 {
-  "name": "Catatan Harian Komisi Treatment",
-  "version": "1.0.0",
-  "description": "Aplikasi web untuk pencatatan komisi treatment terapis dengan luxury design dan fitur lengkap",
-  "main": "index.html",
+  "name": "catatan-harian-komisi-treatment",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "start": "python -m http.server 3000",
-    "dev": "python -m http.server 3000",
-    "build": "echo 'No build process needed for vanilla JS'",
-    "preview": "python -m http.server 3001",
-    "lint": "echo 'Linting completed'",
-    "deploy": "vercel --prod"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "postinstall": "prisma generate"
   },
-  "keywords": [
-    "treatment",
-    "komisi",
-    "catatan",
-    "vanilla-javascript",
-    "pwa",
-    "vercel"
-  ],
-  "author": "OREA 85",
-  "license": "MIT",
-  "devDependencies": {},
-  "dependencies": {},
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/FahrulKun/Logbook-orea85.git"
+  "dependencies": {
+    "@prisma/client": "^6.0.0",
+    "@radix-ui/react-dialog": "^1.1.2",
+    "@radix-ui/react-label": "^2.1.0",
+    "@radix-ui/react-popover": "^1.1.2",
+    "@radix-ui/react-slot": "^1.1.0",
+    "@radix-ui/react-toast": "^1.2.2",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
+    "date-fns-tz": "^3.2.0",
+    "framer-motion": "^11.15.0",
+    "lucide-react": "^0.468.0",
+    "next": "15.3.5",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-fast-marquee": "^1.6.5",
+    "tailwind-merge": "^2.5.5",
+    "tailwindcss-animate": "^1.0.7"
   },
-  "homepage": "https://logbook-orea85-vanilla.vercel.app",
-  "engines": {
-    "node": ">=14.0.0"
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.0.0",
+    "@types/node": "^20.17.10",
+    "@types/react": "^19.0.1",
+    "@types/react-dom": "^19.0.1",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9.16.0",
+    "eslint-config-next": "15.3.5",
+    "postcss": "^8.4.49",
+    "prisma": "^6.0.0",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.7.2"
   }
 }
