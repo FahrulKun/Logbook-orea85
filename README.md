@@ -1,104 +1,156 @@
-# Catatan Harian Komisi Treatment - Vanilla JavaScript
+#Catatan Harian Komisi Treatment
+Aplikasi web untuk pencatatan komisi treatment terapis dengan luxury design dan fitur lengkap.
 
-Aplikasi web untuk pencatatan komisi treatment terapis yang dibangun dengan Vanilla JavaScript, HTML, dan CSS. Aplikasi ini dirancang khusus untuk deployment di Vercel tanpa dependensi framework.
+🚀 Fitur
+⏰ Waktu & Tanggal
+Real-time clock dengan zona waktu WIB (GMT+7)
+Auto-update tanggal tengah malam
+Record waktu input untuk setiap entry
+Timezone handling yang akurat
+📊 Data Management
+35+ jenis treatment dengan harga dan komisi otomatis
+Input data yang mudah dan cepat
+Statistik harian dan bulanan
+Data persistence dengan localStorage
+Auto-calculate komisi
+📈 Statistik & Analisis
+Total treatment hari ini
+Total komisi hari ini
+Total treatment bulan ini
+Total komisi bulan ini
+Most frequent treatment dengan marquee effect
+💾 Export & Share
+Share data ke WhatsApp
+Share data ke Telegram
+Copy to clipboard
+Export ke CSV
+Preview data sebelum share
+🎨 UI/UX Design
+Luxury dan minimalist design
+Smooth animations dan transitions
+Responsive design
+Loading states dan error handling
+Toast notifications
+🗑️ Data Management
+Delete confirmation popup
+Scroll position preservation
+Form validation
+Auto-fill harga dan komisi
+🛠️ Teknologi
+Framework: Next.js 15.3.5 dengan App Router
+Language: TypeScript 5
+Styling: Tailwind CSS 4 dengan shadcn/ui
+Database: Prisma ORM dengan SQLite
+UI Components: shadcn/ui component library
+Icons: Lucide React
+Date Handling: date-fns
+State Management: React Hooks
+📁 Struktur Proyek
+src/
+├── app/
+│   ├── page.tsx              # Halaman utama aplikasi
+│   ├── layout.tsx            # Root layout dengan metadata
+│   ├── globals.css           # Global styles
+│   └── api/                 # API routes
+│       ├── route.ts          # Main API endpoint
+│       └── logs/
+│           ├── route.ts      # Logs CRUD operations
+│           └── [id]/
+│               └── route.ts  # Delete log by ID
+├── components/
+│   └── ui/                 # shadcn/ui components
+└── lib/
+    ├── db.ts               # Database client
+    └── utils.ts           # Utility functions
+🎯 Jenis Treatment
+Chair Refleksi
+Chair Refleksi 1 jam : 30.000
+Chair Refleksi 1,5 jam : 45.000
+Chair Refleksi 2 jam : 60.000
+Full Body (FB)
+FB 1,5 jam : 52.500
+FB 2 jam : 67.500
+FB + Lulur 1,5 jam : 67.500
+FB + Lulur 2 jam : 82.500
+FB + Totok Wajah 1,5 jam : 61.500
+FB + Totok Wajah 2 jam : 76.500
+FB + Kerokan 1,5 jam : 61.500
+FB + Kerokan 2 jam : 76.500
+FB + Refleksi 1,5 jam : 61.500
+FB + Refleksi 2 jam : 76.500
+Sport Massage
+Sport Massage 1 jam : 45.000
+Sport Massage 1,5 jam : 58.500
+Prenatal & Post Natal
+Prenatal 1,5 jam : 67.500
+Prenatal 2 jam : 76.500
+Prenatal + Lulur 1,5 jam : 75.000
+Prenatal + Lulur 2 jam : 93.750
+Post Natal 1 jam : 52.500
+Pijat Laktasi 30 menit : 45.000
+Bengkung 30 menit : 37.500
+Post Natal Paket 2 jam : 127.500
+Lympatic Drainage
+Brazilian Lympatic 1 jam : 157.750
+Brazilian Lympatic 1,5 jam : 228.750
+Facial Lympatic 30 menit : 52.500
+Manual Lympatic 1 jam : 116.250
+Add On Services
+Add on FB 30 menit : 16.500
+Add on FB 1 jam : 33.500
+Add on Lulur 30 menit : 30.000
+Add on Totok Wajah 30 menit : 24.000
+Add on Kerokan 30 menit : 24.000
+Add on Refleksi FB 30 menit : 24.000
+Add on Refleksi Chair 30 menit : 18.000
+🔧 Konfigurasi
+WIB Timezone
+Aplikasi menggunakan zona waktu WIB (GMT+7) untuk semua fungsi tanggal dan waktu.
 
-## 🚀 Fitur
+Komisi Otomatis
+Komisi dihitung otomatis sesuai dengan harga treatment yang telah ditetapkan.
 
-### 📱 Progressive Web App (PWA)
-- Installable pada mobile dan desktop
-- Offline functionality dengan service worker
-- Responsive design untuk semua perangkat
-- Splash screens dan app icons
+Data Storage
+Data disimpan di browser localStorage dan akan persist antar session.
 
-### ⏰ Waktu & Tanggal
-- Real-time clock dengan zona waktu WIB (GMT+7)
-- Auto-update tanggal tengah malam
-- Record waktu input untuk setiap entry
-- Timezone handling yang akurat
+🚀 Cara Menjalankan
+Prerequisites
+Node.js 18+
+npm atau yarn
+Installation
+# Clone repository
+git clone https://github.com/FahrulKun/Logbook-orea85.git
+cd Logbook-orea85
 
-### 📊 Data Management
-- 35+ jenis treatment dengan harga dan komisi otomatis
-- Input data yang mudah dan cepat
-- Statistik harian dan bulanan
-- Data persistence dengan localStorage
-- Auto-calculate komisi (30% dari harga)
+# Install dependencies
+npm install
 
-### 📈 Statistik & Analisis
-- Total treatment hari ini
-- Total komisi hari ini
-- Total treatment bulan ini
-- Total komisi bulan ini
-- Most frequent treatment dengan marquee effect
+# Setup database
+npx prisma generate
+npx prisma db push
 
-### 💾 Export & Share
-- Share data ke WhatsApp
-- Share data ke Telegram
-- Copy to clipboard
-- Export ke CSV
-- Preview data sebelum share
+# Run development server
+npm run dev
 
-### 🎨 UI/UX Design
-- Luxury dan minimalist design
-- Smooth animations dan transitions
-- Dark mode support
-- Responsive design
-- Loading states dan error handling
-- Toast notifications
+Environment Variables
+# Copy .env.example ke .env
+cp .env.example .env
 
-### 🗑️ Data Management
-- Delete confirmation popup
-- Scroll position preservation
-- Form validation
-- Auto-fill harga dan komisi
+# Edit .env file
+DATABASE_URL="file:./dev.db"
 
-## 🛠️ Teknologi
+🌐 Browser Support
+Chrome 80+
+Firefox 75+
+Safari 13+
+Edge 80+
+📄 License
+MIT License - OREA 85
 
-- **Frontend**: Vanilla JavaScript (ES6+)
-- **Styling**: Tailwind CSS (CDN)
-- **Storage**: LocalStorage API
-- **PWA**: Service Worker + Web App Manifest
-- **Deployment**: Vercel (Static Site)
+🤝 Support
+Instagram: @OREA_85
 
-## 📁 Struktur Proyek
-
-```
-logbook-orea85-vanilla/
-├── index.html              # Halaman utama
-├── css/
-│   └── style.css          # Custom CSS dan animations
-├── js/
-│   └── app.js             # Main application logic
-├── icons/                 # PWA icons (8 sizes)
-├── manifest.json          # PWA manifest
-├── service-worker.js      # Service worker untuk offline
-├── vercel.json           # Vercel configuration
-├── package.json          # Project metadata
-└── README.md             # Documentation
-```
-
-## 🚀 Cara Deployment ke Vercel
-
-### 1. Upload ke GitHub
-```bash
-# Inisialisasi git repository
-git init
-git add .
-git commit -m "Initial commit - Vanilla JS Treatment App"
-
-# Add remote dan push
-git remote add origin https://github.com/FahrulKun/Logbook-orea85.git
-git branch -M main
-git push -u origin main
-```
-
-### 2. Deploy ke Vercel
-1. Buka [vercel.com](https://vercel.com)
-2. Sign in dengan GitHub
-3. Click "New Project"
-4. Pilih repository `Logbook-orea85`
-5. Vercel akan otomatis mendeteksi sebagai static site
-6. Click "Deploy"
-
+OREA 85 - Luxury Treatment Center
 ### 3. Konfigurasi Kustom (Opsional)
 - Custom domain: Settings → Domains
 - Environment variables: Settings → Environment Variables
