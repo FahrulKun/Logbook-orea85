@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Trash2, Calendar, TrendingUp, Filter, Plus, X, ChevronDown, Search, ChevronLeft, ChevronRight, Share2, Download, MessageCircle, Send, Eye } from 'lucide-react';
+import { Trash2, Calendar, TrendingUp, Filter, Plus, X, ChevronDown, Search, ChevronLeft, ChevronRight, Share2, Download } from 'lucide-react';
 import { format, startOfWeek, endOfWeek, isWithinInterval, parseISO, subWeeks, addWeeks } from 'date-fns';
 
 interface LogEntry {
@@ -15,7 +15,7 @@ interface LogEntry {
   day: number;
   treatmentName: string;
   commission: number;
-  inputTime: string; // WIB time when entry was created
+  inputTime: string;
 }
 
 const treatments = [
@@ -55,13 +55,11 @@ const treatments = [
   { name: 'Add on Refleksi Chair 30 menit', commission: 18000 },
 ];
 
-// Helper function to get current WIB time (GMT+7)
 const getWIBTime = () => {
   const now = new Date();
   return new Date(now.getTime() + (7 * 60 * 60 * 1000) + (now.getTimezoneOffset() * 60 * 1000));
 };
 
-// Helper function to get current WIB time string
 const getWIBTimeString = () => {
   const wibTime = getWIBTime();
   return wibTime.toLocaleTimeString('id-ID', {
@@ -72,7 +70,6 @@ const getWIBTimeString = () => {
   });
 };
 
-// Helper function to get WIB date string for display
 const getWIBDateString = () => {
   const wibTime = getWIBTime();
   return wibTime.toLocaleDateString('id-ID', {
@@ -85,7 +82,7 @@ const getWIBDateString = () => {
 
 const getDayOfWeek = (date: Date): number => {
   const day = date.getDay();
-  return day === 0 ? 1 : day + 1; // Sunday = 1, Monday = 2, ..., Saturday = 7
+  return day === 0 ? 1 : day + 1;
 };
 
 const formatCurrency = (amount: number): string => {
@@ -96,7 +93,7 @@ const formatCurrency = (amount: number): string => {
   }).format(amount);
 };
 
-export default function LogbookKomisi() {
+export default function CatatanHarianKomisiTreatment() {
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const [selectedTreatment, setSelectedTreatment] = useState<string>('');
   const [selectedDate, setSelectedDate] = useState<string>('');
@@ -111,9 +108,9 @@ export default function LogbookKomisi() {
   const [showSharePreview, setShowSharePreview] = useState<boolean>(false);
   const [sharePreviewText, setSharePreviewText] = useState<string>('');
   const [deleteConfirm, setDeleteConfirm] = useState<{ id: string; treatmentName: string; date: string } | null>(null);
-  const [dateUpdateTrigger, setDateUpdateTrigger] = useState<number>(0); // Trigger for re-renders
-  const [maxDateWIB, setMaxDateWIB] = useState<string>(''); // Max date in WIB
-  const [currentTimeWIB, setCurrentTimeWIB] = useState<string>(''); // Current WIB time
+  const [dateUpdateTrigger, setDateUpdateTrigger] = useState<number>(0);
+  const [maxDateWIB, setMaxDateWIB] = useState<string>('');
+  const [currentTimeWIB, setCurrentTimeWIB] = useState<string>('');
   const popupRef = useRef<HTMLDivElement>(null);
   const shareMenuRef = useRef<HTMLDivElement>(null);
   const sharePreviewRef = useRef<HTMLDivElement>(null);
@@ -123,16 +120,14 @@ export default function LogbookKomisi() {
     const savedLogs = localStorage.getItem('komisiLogs');
     if (savedLogs) {
       const parsedLogs = JSON.parse(savedLogs);
-      // Migrate existing logs to include inputTime if missing
       const migratedLogs = parsedLogs.map((log: any) => ({
         ...log,
-        inputTime: log.inputTime || '-' // Set default value for existing logs
+        inputTime: log.inputTime || '-'
       }));
       setLogs(migratedLogs);
     }
   }, []);
 
-  // ROBUST DATE MANAGEMENT SYSTEM - WIB TIME (GMT+7)
   useEffect(() => {
     const getCurrentDateString = () => {
       return getWIBTime().toISOString().split('T')[0];
@@ -141,22 +136,16 @@ export default function LogbookKomisi() {
     const updateDateState = () => {
       const today = getCurrentDateString();
       const wibNow = getWIBTime();
-      const yesterday = new Date(wibNow.getTime() - 24 * 60 * 60 * 1000).toISOString().split('T')[0];
       
-      // Update current time every second
       setCurrentTimeWIB(getWIBTimeString());
       
-      // Check if date has changed from last check (using WIB time)
       if (lastDateRef.current !== today) {
         console.log('WIB Date changed from', lastDateRef.current, 'to', today);
         lastDateRef.current = today;
         setSelectedDate(today);
-        setMaxDateWIB(today); // Update max date for input
-        
-        // Force component re-render to update week calculations
+        setMaxDateWIB(today);
         setDateUpdateTrigger(prev => prev + 1);
         
-        // Update date input attributes
         const dateInput = document.getElementById('date') as HTMLInputElement;
         if (dateInput) {
           dateInput.value = today;
@@ -165,18 +154,12 @@ export default function LogbookKomisi() {
       }
     };
 
-    // Update immediately on mount
     updateDateState();
-
-    // Check for date change every minute using WIB time
     const dateCheckInterval = setInterval(updateDateState, 60000);
-    
-    // Update time every second
     const timeUpdateInterval = setInterval(() => {
       setCurrentTimeWIB(getWIBTimeString());
     }, 1000);
 
-    // Additional checks on page visibility change and focus
     const handleVisibilityChange = () => {
       if (!document.hidden) {
         updateDateState();
@@ -189,11 +172,9 @@ export default function LogbookKomisi() {
       setCurrentTimeWIB(getWIBTimeString());
     };
 
-    // Add event listeners
     document.addEventListener('visibilitychange', handleVisibilityChange);
     window.addEventListener('focus', handleFocus);
 
-    // Cleanup
     return () => {
       clearInterval(dateCheckInterval);
       clearInterval(timeUpdateInterval);
@@ -206,7 +187,6 @@ export default function LogbookKomisi() {
     localStorage.setItem('komisiLogs', JSON.stringify(logs));
   }, [logs]);
 
-  // Initialize date on component mount using WIB
   useEffect(() => {
     const todayWIB = getWIBTime().toISOString().split('T')[0];
     setSelectedDate(todayWIB);
@@ -215,10 +195,7 @@ export default function LogbookKomisi() {
     lastDateRef.current = todayWIB;
   }, []);
 
-  // Force re-render when date changes to update week calculations
   useEffect(() => {
-    // This effect runs whenever dateUpdateTrigger changes
-    // It ensures all week-related functions recalculate with the current date
     console.log('Date update trigger fired, re-rendering component');
   }, [dateUpdateTrigger]);
 
@@ -276,21 +253,20 @@ export default function LogbookKomisi() {
     }
 
     const dateObj = new Date(selectedDate);
-    const inputTimeWIB = getWIBTimeString(); // Get current WIB time when submitting
+    const inputTimeWIB = getWIBTimeString();
     const newLog: LogEntry = {
       id: Date.now().toString(),
       date: selectedDate,
       day: getDayOfWeek(dateObj),
       treatmentName: selectedTreatment,
       commission: parseInt(commission),
-      inputTime: inputTimeWIB, // Add input time to log entry
+      inputTime: inputTimeWIB,
     };
 
     setLogs([newLog, ...logs]);
     
     setSelectedTreatment('');
     setCommission('');
-    // Keep selectedDate as today (don't reset)
   };
 
   const handleDelete = (id: string, treatmentName: string, date: string) => {
@@ -309,7 +285,6 @@ export default function LogbookKomisi() {
   };
 
   const getWeeklyLogs = (weekOffset: number = 0): LogEntry[] => {
-    // Always use current WIB date for calculations
     const wibNow = getWIBTime();
     const targetDate = weekOffset === 0 ? wibNow : addWeeks(wibNow, weekOffset);
     const weekStart = startOfWeek(targetDate, { weekStartsOn: 0 });
@@ -342,7 +317,6 @@ export default function LogbookKomisi() {
   };
 
   const getWeekDisplay = (weekOffset: number): string => {
-    // Use current WIB date for week display
     const wibNow = getWIBTime();
     const targetDate = weekOffset === 0 ? wibNow : addWeeks(wibNow, weekOffset);
     const weekStart = startOfWeek(targetDate, { weekStartsOn: 0 });
@@ -422,736 +396,385 @@ export default function LogbookKomisi() {
   };
 
   const formatShareData = (data: LogEntry[]): string => {
-  if (data.length === 0) return 'No data to share';
-  
-  // Group data by date
-  const groupedData = data.reduce((acc, log) => {
-    const date = log.date;
-    if (!acc[date]) {
-      acc[date] = [];
-    }
-    acc[date].push(log);
-    return acc;
-  }, {} as Record<string, LogEntry[]>);
-
-  // Get date range
-  const sortedDates = Object.keys(groupedData).sort();
-  const startDate = new Date(sortedDates[0] + 'T00:00:00');
-  const endDate = new Date(sortedDates[sortedDates.length - 1] + 'T00:00:00');
-  
-  // Determine if it's current week, last week, or custom range
-  const today = new Date();
-  const currentWeekStart = startOfWeek(today, { weekStartsOn: 0 });
-  const currentWeekEnd = endOfWeek(today, { weekStartsOn: 0 });
-  const lastWeekStart = startOfWeek(subWeeks(today, 1), { weekStartsOn: 0 });
-  const lastWeekEnd = endOfWeek(subWeeks(today, 1), { weekStartsOn: 0 });
-  
-  let reportTitle = '📊 *LAPORAN KOMISI*';
-  let periodText = '';
-  
-  // Check if data is from last week
-  if (sortedDates.length >= 5) {
-    const dataStart = new Date(sortedDates[0] + 'T00:00:00');
-    const dataEnd = new Date(sortedDates[sortedDates.length - 1] + 'T00:00:00');
+    if (data.length === 0) return 'No data to share';
     
-    if (dataStart >= lastWeekStart && dataEnd <= lastWeekEnd) {
-      reportTitle = '📊 *LAPORAN KOMISI MINGGU LALU*';
-    }
-  }
-  
-  // Format period text
-  if (sortedDates.length === 1) {
-    periodText = `📅 Periode: ${format(startDate, 'dd MMMM yyyy')}`;
-  } else {
-    periodText = `📅 Periode: ${format(startDate, 'dd MMMM yyyy')} - ${format(endDate, 'dd MMMM yyyy')}`;
-  }
-  
-  // Calculate totals
-  const grandTotal = data.reduce((sum, log) => sum + log.commission, 0);
-  const totalTransactions = data.length;
-  
-  // Start building output
-  let output = `${reportTitle}\n\n${periodText}\n\n💰 *Total Komisi: ${formatCurrency(grandTotal)}*\n📝 Jumlah Transaksi: ${totalTransactions}\n\n`;
-  
-  // Add transactions by date
-  sortedDates.forEach((date) => {
-    const dateObj = new Date(date + 'T00:00:00');
-    const dayName = format(dateObj, 'EEEE');
-    const formattedDate = format(dateObj, 'dd-MM-yyyy');
-    
-    // Add date header
-    output += `📅 ${formattedDate} (${dayName})\n`;
-    
-    // Add transactions for this date
-    groupedData[date].forEach((log, logIndex) => {
-      // Format treatment name to uppercase and replace common variations
-      let treatmentName = log.treatmentName.toUpperCase();
-      
-      // Replace common variations to match the example
-      treatmentName = treatmentName
-        .replace(/1 JAM/g, '60 MENIT')
-        .replace(/1,5 JAM/g, '90 MENIT')
-        .replace(/2 JAM/g, '2 JAM')
-        .replace(/30 MENIT/g, '30 MENIT')
-        .replace(/\s+/g, ' '); // Normalize spaces
-      
-      output += `${logIndex + 1}. ${treatmentName} : 💰 ${formatCurrency(log.commission)}\n`;
-    });
-    
-    // Add empty line between dates (except last one)
-    if (date !== sortedDates[sortedDates.length - 1]) {
-      output += '\n';
-    }
-  });
-
-  // Add copyright
-  output += `\n© Developed by OREA 85 - ${format(new Date(), 'yyyy')}`;
-
-  return output;
-};
-
-const openSharePreview = (data: LogEntry[]) => {
-  const formattedText = formatShareData(data);
-  setSharePreviewText(formattedText);
-  setShowSharePreview(true);
-  setShowShareMenu(false);
-};
-
-  useEffect(() => {
-    if (filterStart || filterEnd) {
-      applyFilter();
-    } else {
-      setFilteredLogs([]);
-    }
-  }, [filterStart, filterEnd]);
-
-  // Body scroll prevention for mobile treatment popup and delete confirmation
-  useEffect(() => {
-    const body = document.body;
-    
-    if (isTreatmentPopupOpen || deleteConfirm || showSharePreview) {
-      // Store current scroll position BEFORE applying fixed positioning
-      const scrollY = window.scrollY;
-      const scrollX = window.scrollX;
-      
-      // Store in data attributes for restoration
-      body.setAttribute('data-scroll-y', String(scrollY));
-      body.setAttribute('data-scroll-x', String(scrollX));
-      
-      // Apply fixed positioning with OFFSET to maintain visual position
-      body.style.position = 'fixed';
-      body.style.top = `-${scrollY}px`;
-      body.style.left = `-${scrollX}px`;
-      body.style.width = '100%';
-      body.style.height = '100%';
-      body.style.overflow = 'hidden';
-      
-      console.log('Popup opened - applied fixed positioning with offset:', { scrollY, scrollX });
-      
-    } else {
-      // Get stored scroll position
-      const savedScrollY = body.getAttribute('data-scroll-y');
-      const savedScrollX = body.getAttribute('data-scroll-x');
-      
-      if (savedScrollY !== null) {
-        const scrollY = parseInt(savedScrollY);
-        const scrollX = parseInt(savedScrollX || '0');
-        
-        console.log('Popup closed - restoring to exact position:', { scrollY, scrollX });
-        
-        // Remove fixed positioning FIRST
-        body.style.position = '';
-        body.style.top = '';
-        body.style.left = '';
-        body.style.width = '';
-        body.style.height = '';
-        body.style.overflow = '';
-        
-        // Clear data attributes
-        body.removeAttribute('data-scroll-y');
-        body.removeAttribute('data-scroll-x');
-        
-        // IMMEDIATELY restore scroll position without animation
-        window.scrollTo(scrollX, scrollY);
+    const groupedData = data.reduce((acc, log) => {
+      const date = log.date;
+      if (!acc[date]) {
+        acc[date] = [];
       }
-    }
-  }, [isTreatmentPopupOpen, deleteConfirm, showSharePreview]);
+      acc[date].push(log);
+      return acc;
+    }, {} as Record<string, LogEntry[]>);
 
-  // Calculate current week logs (will automatically use current date)
+    const sortedDates = Object.keys(groupedData).sort();
+    const startDate = new Date(sortedDates[0] + 'T00:00:00');
+    const endDate = new Date(sortedDates[sortedDates.length - 1] + 'T00:00:00');
+    
+    let text = `📋 CATATAN KOMISI TREATMENT - OREA 85\n`;
+    text += `📅 ${getWIBDateString()}\n`;
+    text += `${'='.repeat(50)}\n\n`;
+
+    let globalCounter = 1;
+    let totalCommission = 0;
+
+    Object.keys(groupedData).sort((a, b) => b.localeCompare(a)).forEach(date => {
+      const dateObj = new Date(date + 'T00:00:00');
+      const formattedDate = dateObj.toLocaleDateString('id-ID', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+
+      text += `📅 ${formattedDate}\n`;
+      text += `${'-'.repeat(30)}\n`;
+
+      groupedData[date].forEach(entry => {
+        text += `${globalCounter++}. ${entry.inputTime} - ${entry.treatmentName}\n`;
+        text += `   Treatment: ${entry.treatmentName}\n`;
+        text += `   Komisi: ${formatCurrency(entry.commission)}\n`;
+        if (entry.inputTime !== '-') {
+          text += `   Waktu Input: ${entry.inputTime}\n`;
+        }
+        text += '\n';
+        totalCommission += entry.commission;
+      });
+    });
+
+    text += `${'='.repeat(50)}\n`;
+    text += `💰 TOTAL KOMISI: ${formatCurrency(totalCommission)}\n`;
+    text += `📊 TOTAL ENTRY: ${data.length} treatment\n`;
+    text += `${'='.repeat(50)}\n`;
+    text += `📱 Instagram: @OREA_85\n`;
+    text += `🏢 OREA 85 - Luxury Treatment Center`;
+
+    return text;
+  };
+
   const currentWeekLogs = getWeeklyLogs(currentWeekOffset);
+  const currentWeekTotal = getWeeklyTotal(currentWeekOffset);
+  const mostFrequentTreatment = getMostFrequentTreatment(currentWeekOffset);
 
   return (
-    <div key={dateUpdateTrigger} className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-amber-50">
-      <div className="max-w-7xl mx-auto px-6 py-12 space-y-10">
-        {/* Elegant Header */}
-        <div className="text-center space-y-4">
-          <h1 className="text-5xl font-light tracking-tight text-amber-900">
-            Logbook Komisi
-          </h1>
-          <p className="text-lg text-amber-700 font-light">
-            Management system for treatment commissions
-          </p>
-          <p className="text-sm text-amber-600 font-light">
-            Developed by OREA 85
-          </p>
-        </div>
-
-        {/* Input Form - Luxury Minimalist */}
-        <Card className="luxury-card">
-          <CardHeader className="pb-6">
-            <CardTitle className="text-xl font-medium luxury-text flex items-center gap-3">
-              <div className="icon-wrapper">
-                <Plus className="w-4 h-4 text-amber-600" />
-              </div>
-              Add New Entry
-            </CardTitle>
-            {/* Digital Clock */}
-            <div className="mt-4 text-center">
-              <div className="text-3xl font-light text-amber-900 tracking-wider font-mono">
-                {currentTimeWIB}
-              </div>
-              <div className="text-sm text-amber-600 font-light">
-                {getWIBDateString()}
-              </div>
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <header className="bg-gray-900 text-white shadow-lg">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex justify-between items-center">
+            <div>
+              <h1 className="text-2xl font-bold">Catatan Harian Komisi Treatment</h1>
+              <p className="text-sm opacity-90">OREA 85 - Luxury Treatment Center</p>
             </div>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-5 gap-4">
-              <div className="md:col-span-2 space-y-2">
-                <Label htmlFor="treatment" className="text-sm font-medium text-amber-700">
-                  Treatment Name
-                </Label>
-                <div className="relative" ref={popupRef}>
-                  <button
-                    type="button"
-                    onClick={() => setIsTreatmentPopupOpen(!isTreatmentPopupOpen)}
-                    className="w-full border-amber-200 bg-white text-amber-900 focus:border-amber-400 focus:ring-amber-400/20 rounded-lg px-3 py-2 text-left flex items-center justify-between hover:border-amber-300 transition-colors"
-                  >
-                    <span className={selectedTreatment ? 'text-amber-900' : 'text-amber-400'}>
-                      {selectedTreatment || 'Select treatment'}
-                    </span>
-                    <ChevronDown className={`w-4 h-4 text-amber-400 transition-transform ${isTreatmentPopupOpen ? 'rotate-180' : ''}`} />
-                  </button>
-                  
-                  {isTreatmentPopupOpen && (
-                    <>
-                      {/* Mobile Backdrop */}
-                      <div className="md:hidden fixed inset-0 bg-black/50 z-40" onClick={handlePopupClose} />
-                      
-                      {/* Dropdown Content */}
-                      <div className="treatment-dropdown-desktop popup-animation">
-                        <div className="p-3 border-b border-amber-200 flex items-center justify-between">
-                          <div className="relative flex-1 mr-3">
-                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-amber-400" />
-                            <input
-                              type="text"
-                              placeholder="Search treatments..."
-                              value={treatmentSearch}
-                              onChange={(e) => setTreatmentSearch(e.target.value)}
-                              className="w-full pl-10 pr-4 py-2 border border-amber-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent text-sm"
-                            />
-                          </div>
-                          <button
-                            onClick={handlePopupClose}
-                            className="p-2 hover:bg-amber-100 rounded-lg transition-colors md:hidden"
-                          >
-                            <X className="w-4 h-4 text-amber-400" />
-                          </button>
-                        </div>
-                        <div className="max-h-48 overflow-y-auto">
-                          {filteredTreatments.length === 0 ? (
-                            <div className="px-3 py-4 text-center text-amber-500 text-sm">
-                              No treatments found
-                            </div>
-                          ) : (
-                            filteredTreatments.map((treatment) => (
-                              <button
-                                key={treatment.name}
-                                onClick={() => handleTreatmentSelect(treatment)}
-                                className="treatment-dropdown-desktop-item w-full text-left"
-                              >
-                                <div className="flex items-center justify-between">
-                                  <span className="text-sm text-amber-900">
-                                    {treatment.name}
-                                  </span>
-                                  <span className="text-xs text-amber-500">
-                                    {formatCurrency(treatment.commission)}
-                                  </span>
-                                </div>
-                              </button>
-                            ))
-                          )}
-                        </div>
-                      </div>
-                    </>
-                  )}
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="date" className="text-sm font-medium text-zinc-700">
-                  Date
-                </Label>
-                <Input
-                  id="date"
-                  key={selectedDate} // Force re-render when date changes
-                  type="date"
-                  value={selectedDate}
-                  onChange={(e) => {
-                    setSelectedDate(e.target.value);
-                  }}
-                  max={maxDateWIB}
-                  className="border-zinc-200 bg-white text-zinc-900 focus:border-zinc-400 focus:ring-zinc-400/20 rounded-lg"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="commission" className="text-sm font-medium text-zinc-700">
-                  Commission
-                </Label>
-                <Input
-                  id="commission"
-                  type="text"
-                  value={commission && commission !== '' ? formatCurrency(parseInt(commission)) : ''}
-                  readOnly
-                  className="border-zinc-200 bg-zinc-50 text-zinc-900 font-medium rounded-lg"
-                />
-              </div>
-
-              <div className="flex items-end">
-                <Button 
-                  type="submit" 
-                  className="w-full bg-zinc-900 hover:bg-zinc-800 text-white font-medium rounded-lg transition-colors"
-                >
-                  Add Entry
-                </Button>
-              </div>
-            </form>
-          </CardContent>
-        </Card>
-
-        {/* Stats Cards - Elegant Design */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Card className="border-0 shadow-lg bg-gradient-to-br from-zinc-900 to-zinc-800 text-white">
-            <CardHeader className="pb-4">
-              <CardTitle className="text-lg font-medium text-white/90 flex items-center gap-3">
-                <div className="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center">
-                  <TrendingUp className="w-4 h-4 text-white" />
-                </div>
-                <div className="flex items-center gap-2">
-                  Weekly Total
-                  <div className="flex items-center gap-1">
-                    <button
-                      onClick={() => setCurrentWeekOffset(currentWeekOffset - 1)}
-                      className="p-1 hover:bg-white/10 rounded transition-colors"
-                      disabled={currentWeekOffset <= -4}
-                    >
-                      <ChevronLeft className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={() => setCurrentWeekOffset(currentWeekOffset + 1)}
-                      className="p-1 hover:bg-white/10 rounded transition-colors"
-                      disabled={currentWeekOffset >= 0}
-                    >
-                      <ChevronRight className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-light text-white">
-                {formatCurrency(getWeeklyTotal(currentWeekOffset))}
-              </div>
-              <div className="text-sm text-white/60 mt-1">{getWeekDisplay(currentWeekOffset)}</div>
-            </CardContent>
-          </Card>
-
-          <Card className="border-0 shadow-lg bg-white">
-            <CardHeader className="pb-4">
-              <CardTitle className="text-lg font-medium text-zinc-900 flex items-center gap-3">
-                <div className="w-8 h-8 bg-zinc-100 rounded-lg flex items-center justify-center">
-                  <Calendar className="w-4 h-4 text-zinc-600" />
-                </div>
-                Statistics
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-2 gap-6">
-                <div>
-                  <div className="text-2xl font-light text-zinc-900">{currentWeekLogs.length}</div>
-                  <div className="text-sm text-zinc-500">Total Entries</div>
-                </div>
-                <div>
-                  <div className="text-lg font-light text-zinc-900 marquee-container">
-                    <div className="marquee-content">
-                      {getMostFrequentTreatment(currentWeekOffset)}
-                    </div>
-                  </div>
-                  <div className="text-sm text-zinc-500">Most Frequent</div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Weekly Log Table - Clean Design */}
-        <Card className="border-0 shadow-lg bg-white">
-          <CardHeader className="pb-4">
-            <CardTitle className="text-lg font-medium text-zinc-900 flex items-center justify-between">
-              <span>Weekly Log - {getWeekDisplay(currentWeekOffset)}</span>
-              <div className="relative" ref={shareMenuRef}>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  onClick={() => openSharePreview(currentWeekLogs)}
-                  disabled={currentWeekLogs.length === 0}
-                  className="relative overflow-hidden group border-2 border-zinc-300 bg-gradient-to-r from-zinc-50 to-zinc-100 hover:from-zinc-100 hover:to-zinc-200 text-zinc-800 font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-green-400/20 to-blue-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <div className="relative flex items-center justify-center">
-                    <Share2 className="w-5 h-5 mr-2 relative z-10" />
-                    <span className="relative z-10">Share Data</span>
-                    <div className="absolute -top-1 -right-1">
-                      <div className="flex space-y-1">
-                        <div className="w-1 h-1 bg-green-400 rounded-full animate-pulse"></div>
-                        <div className="w-1 h-1 bg-blue-400 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-                      </div>
-                    </div>
-                  </div>
-                </Button>
-              </div>
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="overflow-x-auto">
-              <Table>
-                <TableHeader>
-                  <TableRow className="border-zinc-100">
-                    <TableHead className="text-zinc-700 font-medium">Date</TableHead>
-                    <TableHead className="text-zinc-700 font-medium">Day</TableHead>
-                    <TableHead className="text-zinc-700 font-medium">Treatment</TableHead>
-                    <TableHead className="text-zinc-700 font-medium text-right">Commission</TableHead>
-                    <TableHead className="text-zinc-700 font-medium text-center">Waktu Input</TableHead>
-                    <TableHead className="text-zinc-700 font-medium text-center w-20">Action</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {currentWeekLogs.length === 0 ? (
-                    <TableRow>
-                      <TableCell colSpan={6} className="text-center text-zinc-400 py-12">
-                        <div className="space-y-2">
-                          <div className="w-12 h-12 bg-zinc-100 rounded-full flex items-center justify-center mx-auto">
-                            <Calendar className="w-6 h-6 text-zinc-400" />
-                          </div>
-                          <p className="text-zinc-500">No entries this week</p>
-                          <p className="text-sm text-zinc-400">Add your first commission entry</p>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ) : (
-                    currentWeekLogs.map((log) => (
-                      <TableRow key={log.id} className="border-zinc-100 hover:bg-zinc-50 transition-colors">
-                        <TableCell className="text-zinc-900 font-medium">{log.date}</TableCell>
-                        <TableCell className="text-zinc-600">Day {log.day}</TableCell>
-                        <TableCell className="text-zinc-900">{log.treatmentName}</TableCell>
-                        <TableCell className="text-zinc-900 text-right font-medium">
-                          {formatCurrency(log.commission)}
-                        </TableCell>
-                        <TableCell className="text-zinc-600 text-center font-mono text-sm">
-                          {log.inputTime || '-'}
-                        </TableCell>
-                        <TableCell className="text-center">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleDelete(log.id, log.treatmentName, log.date)}
-                            className="text-zinc-400 hover:text-red-500 hover:bg-red-50 transition-colors"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </Button>
-                        </TableCell>
-                      </TableRow>
-                    ))
-                  )}
-                </TableBody>
-              </Table>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Filter Section - Minimalist Design */}
-        <Card className="border-0 shadow-lg bg-white">
-          <CardHeader className="pb-6">
-            <CardTitle className="text-lg font-medium text-zinc-900 flex items-center gap-3">
-              <div className="w-8 h-8 bg-zinc-100 rounded-lg flex items-center justify-center">
-                <Filter className="w-4 h-4 text-zinc-600" />
-              </div>
-              Filter & Export
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-8">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="filterStart" className="text-sm font-medium text-zinc-700">
-                  Start Date
-                </Label>
-                <Input
-                  id="filterStart"
-                  type="date"
-                  value={filterStart}
-                  onChange={(e) => setFilterStart(e.target.value)}
-                  className="border-zinc-200 bg-white text-zinc-900 focus:border-zinc-400 focus:ring-zinc-400/20 rounded-lg"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="filterEnd" className="text-sm font-medium text-zinc-700">
-                  End Date
-                </Label>
-                <Input
-                  id="filterEnd"
-                  type="date"
-                  value={filterEnd}
-                  onChange={(e) => setFilterEnd(e.target.value)}
-                  className="border-zinc-200 bg-white text-zinc-900 focus:border-zinc-400 focus:ring-zinc-400/20 rounded-lg"
-                />
-              </div>
-              <div className="flex items-end gap-2">
-                <Button 
-                  onClick={applyFilter}
-                  disabled={!filterStart && !filterEnd}
-                  className="flex-1 bg-zinc-900 hover:bg-zinc-800 text-white font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Apply Filter
-                </Button>
-                <Button 
-                  onClick={() => {
-                    setFilterStart('');
-                    setFilterEnd('');
-                    setFilteredLogs([]);
-                  }}
-                  variant="outline"
-                  className="border-zinc-200 text-zinc-700 hover:bg-zinc-50 rounded-lg"
-                >
-                  Reset
-                </Button>
-              </div>
-            </div>
-
-            {filteredLogs.length > 0 && (
-              <>
-                <div className="overflow-x-auto">
-                  <Table>
-                    <TableHeader>
-                      <TableRow className="border-zinc-100">
-                        <TableHead className="text-zinc-700 font-medium">Date</TableHead>
-                        <TableHead className="text-zinc-700 font-medium">Day</TableHead>
-                        <TableHead className="text-zinc-700 font-medium">Treatment</TableHead>
-                        <TableHead className="text-zinc-700 font-medium text-right">Commission</TableHead>
-                        <TableHead className="text-zinc-700 font-medium text-center">Waktu Input</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {filteredLogs.map((log) => (
-                        <TableRow key={log.id} className="border-zinc-100 hover:bg-zinc-50 transition-colors">
-                          <TableCell className="text-zinc-900 font-medium">{log.date}</TableCell>
-                          <TableCell className="text-zinc-600">Day {log.day}</TableCell>
-                          <TableCell className="text-zinc-900">{log.treatmentName}</TableCell>
-                          <TableCell className="text-zinc-900 text-right font-medium">
-                            {formatCurrency(log.commission)}
-                          </TableCell>
-                          <TableCell className="text-zinc-600 text-center font-mono text-sm">
-                            {log.inputTime || '-'}
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </div>
-
-                <div className="pt-6 border-t border-zinc-100">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <div className="text-sm text-zinc-500">Total Commission</div>
-                      <div className="text-2xl font-light text-zinc-900">
-                        {formatCurrency(getFilteredTotal())}
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-sm text-zinc-500">
-                        {filteredLogs.length} entries
-                      </div>
-                      <div className="text-sm text-zinc-400">
-                        {filterStart && filterEnd ? `${filterStart} - ${filterEnd}` : filterStart || filterEnd || 'All time'}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </>
-            )}
-
-            {filteredLogs.length === 0 && (filterStart || filterEnd) && (
-              <div className="text-center py-8">
-                <div className="w-12 h-12 bg-zinc-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Filter className="w-6 h-6 text-zinc-400" />
-                </div>
-                <p className="text-zinc-500">No data found for selected date range</p>
-                <p className="text-sm text-zinc-400">Try adjusting your filter criteria</p>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-
-        {/* Enhanced Share Preview Modal with Backdrop */}
-        {showSharePreview && (
-          <>
-            <div className="share-popup-with-backdrop" onClick={() => setShowSharePreview(false)}>
-              <div className="share-popup-container" onClick={(e) => e.stopPropagation()}>
-                <div className="share-popup-header">
-                  <h3 className="share-popup-title">Preview Share Data</h3>
-                  <button
-                    onClick={() => setShowSharePreview(false)}
-                    className="share-popup-close"
-                  >
-                    ×
-                  </button>
-                </div>
-                
-                <div className="share-popup-content">
-                  <div className="share-popup-text">
-                    {sharePreviewText}
-                  </div>
-                </div>
-
-                <div className="share-popup-footer">
-                  <button
-                    onClick={() => shareToWhatsApp(currentWeekLogs)}
-                    className="share-popup-button share-popup-whatsapp"
-                  >
-                    <MessageCircle className="w-5 h-5" />
-                    WhatsApp
-                  </button>
-                  <button
-                    onClick={() => shareToTelegram(currentWeekLogs)}
-                    className="share-popup-button share-popup-telegram"
-                  >
-                    <Send className="w-5 h-5" />
-                    Telegram
-                  </button>
-                  <button
-                    onClick={() => copyToClipboard(currentWeekLogs)}
-                    className="share-popup-button share-popup-copy"
-                  >
-                    <Download className="w-5 h-5" />
-                    Copy
-                  </button>
-                  <button
-                    onClick={() => exportToCSV(currentWeekLogs)}
-                    className="share-popup-button share-popup-export"
-                  >
-                    <Download className="w-5 h-5" />
-                    Export CSV
-                  </button>
-                </div>
-              </div>
-            </div>
-          </>
-        )}
-        
-        {/* Delete Confirmation Popup */}
-        {deleteConfirm && (
-          <>
-            <div className="delete-confirm-backdrop prevent-scroll-jump" onClick={cancelDelete}>
-              <div className="delete-confirm-container prevent-scroll-jump" onClick={(e) => e.stopPropagation()}>
-                {/* Header */}
-                <div className="delete-confirm-header">
-                  <div className="flex items-center gap-4">
-                    <div className="delete-icon-wrapper">
-                      <Trash2 className="w-6 h-6 text-red-600" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-zinc-900">Konfirmasi Hapus</h3>
-                      <p className="text-sm text-zinc-500">Tindakan ini tidak dapat dibatalkan</p>
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Content */}
-                <div className="delete-confirm-content">
-                  <p className="text-zinc-700 mb-4">
-                    Apakah Anda yakin ingin menghapus log treatment ini?
-                  </p>
-                  <div className="treatment-info-box">
-                    <div className="space-y-2">
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm font-medium text-zinc-600">Tanggal:</span>
-                        <span className="text-sm font-semibold text-zinc-900">
-                          {deleteConfirm.date}
-                        </span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm font-medium text-zinc-600">Treatment:</span>
-                        <span className="text-sm font-semibold text-zinc-900">
-                          {deleteConfirm.treatmentName}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Actions */}
-                <div className="delete-confirm-footer">
-                  <div className="flex gap-3 justify-end">
-                    <button
-                      onClick={cancelDelete}
-                      className="delete-confirm-button delete-confirm-cancel"
-                    >
-                      Batal
-                    </button>
-                    <button
-                      onClick={confirmDelete}
-                      className="delete-confirm-button delete-confirm-delete"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                      Hapus
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </>
-        )}
-        
-        {/* Footer Copyright */}
-        <div className="text-center py-6 border-t border-amber-200">
-          <div className="space-y-3">
-            <p className="text-sm text-amber-400 font-light">
-              © Developed by OREA 85 - {format(new Date(), 'yyyy')} | All rights reserved
-            </p>
-            <div className="flex items-center justify-center gap-2">
-              <p className="text-sm text-amber-600 font-bold uppercase tracking-wider">
-                JANGAN LUPA FOLLOW INSTAGRAM
-              </p>
-              <a
-                href="https://www.instagram.com/orea_85?igsh=MXdxcjZqeGN1dnFndw=="
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 px-3 py-1 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-sm font-bold rounded-full hover:from-purple-700 hover:to-pink-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
-              >
-                <svg
-                  className="w-4 h-4"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1 1 12.324 0 6.162 6.162 0 0 1-12.324 0zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm4.965-10.405a1.44 1.44 0 1 1 2.881.001 1.44 1.44 0 0 1-2.881-.001z"/>
-                </svg>
-                OREA_85
-              </a>
+            <div className="text-right">
+              <div className="text-xl font-mono font-bold">{currentTimeWIB}</div>
+              <div className="text-sm opacity-90">{getWIBDateString()}</div>
             </div>
           </div>
         </div>
-      </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="flex-grow container mx-auto px-4 py-6">
+        {/* Input Form */}
+        <section className="bg-white rounded-xl shadow-lg p-6 mb-6">
+          <h2 className="text-xl font-bold mb-4 text-gray-900">Input Data Treatment</h2>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <Label className="block text-sm font-medium mb-2">Nama Terapis</Label>
+                <Input 
+                  type="text" 
+                  value={selectedTreatment}
+                  onChange={(e) => setSelectedTreatment(e.target.value)}
+                  placeholder="Pilih atau ketik nama terapis"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+              <div>
+                <Label className="block text-sm font-medium mb-2">Tanggal</Label>
+                <Input 
+                  type="date" 
+                  id="date"
+                  value={selectedDate}
+                  onChange={(e) => setSelectedDate(e.target.value)}
+                  max={maxDateWIB}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+            </div>
+            
+            <div>
+              <Label className="block text-sm font-medium mb-2">Jenis Treatment</Label>
+              <div className="relative">
+                <Input 
+                  type="text" 
+                  value={selectedTreatment}
+                  onChange={(e) => {
+                    setSelectedTreatment(e.target.value);
+                    setTreatmentSearch(e.target.value);
+                    setIsTreatmentPopupOpen(true);
+                  }}
+                  placeholder="Ketik untuk mencari treatment..."
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+                <Button 
+                  type="button"
+                  onClick={() => setIsTreatmentPopupOpen(true)}
+                  className="absolute right-2 top-2 p-1"
+                  variant="outline"
+                  size="sm"
+                >
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <Label className="block text-sm font-medium mb-2">Komisi (Rp)</Label>
+                <Input 
+                  type="number" 
+                  value={commission}
+                  onChange={(e) => setCommission(e.target.value)}
+                  placeholder="0"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+            </div>
+            
+            <div className="flex gap-2">
+              <Button type="submit" className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                Simpan Data
+              </Button>
+              <Button type="button" onClick={() => {
+                setSelectedTreatment('');
+                setCommission('');
+              }} className="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition-colors">
+                Clear
+              </Button>
+            </div>
+          </form>
+        </section>
+
+        {/* Statistics Cards */}
+        <section className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+          <div className="bg-white rounded-xl shadow-lg p-6">
+            <h3 className="text-sm font-medium text-gray-600">Total Treatment {currentWeekOffset === 0 ? 'Hari Ini' : 'Minggu Ini'}</h3>
+            <p className="text-2xl font-bold text-blue-600">{currentWeekLogs.length}</p>
+          </div>
+          <div className="bg-white rounded-xl shadow-lg p-6">
+            <h3 className="text-sm font-medium text-gray-600">Total Komisi {currentWeekOffset === 0 ? 'Hari Ini' : 'Minggu Ini'}</h3>
+            <p className="text-2xl font-bold text-green-600">{formatCurrency(currentWeekTotal)}</p>
+          </div>
+          <div className="bg-white rounded-xl shadow-lg p-6">
+            <h3 className="text-sm font-medium text-gray-600">Treatment Paling Sering</h3>
+            <p className="text-lg font-semibold text-purple-600">{mostFrequentTreatment}</p>
+          </div>
+          <div className="bg-white rounded-xl shadow-lg p-6">
+            <h3 className="text-sm font-medium text-gray-600">Periode</h3>
+            <p className="text-lg font-semibold text-gray-900">{getWeekDisplay(currentWeekOffset)}</p>
+          </div>
+        </section>
+
+        {/* Week Navigation */}
+        <div className="flex justify-center items-center gap-4 mb-6">
+          <Button 
+            onClick={() => setCurrentWeekOffset(currentWeekOffset - 1)}
+            disabled={currentWeekOffset <= -4}
+            variant="outline"
+            size="sm"
+          >
+            <ChevronLeft className="h-4 w-4" />
+            Minggu Lalu
+          </Button>
+          <Button 
+            onClick={() => setCurrentWeekOffset(0)}
+            variant={currentWeekOffset === 0 ? "default" : "outline"}
+            size="sm"
+          >
+            Minggu Ini
+          </Button>
+          <Button 
+            onClick={() => setCurrentWeekOffset(currentWeekOffset + 1)}
+            disabled={currentWeekOffset >= 4}
+            variant="outline"
+            size="sm"
+          >
+            Minggu Depan
+            <ChevronRight className="h-4 w-4" />
+          </Button>
+        </div>
+
+        {/* Data Table */}
+        <section className="bg-white rounded-xl shadow-lg p-6">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-bold text-gray-900">
+              Data Treatment {getWeekDisplay(currentWeekOffset)}
+            </h2>
+            <div className="flex gap-2">
+              <Button onClick={() => setShowSharePreview(true)} className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                <Share2 className="h-4 w-4 mr-2" />
+                Share
+              </Button>
+              <Button onClick={exportToCSV} className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                <Download className="h-4 w-4 mr-2" />
+                Export CSV
+              </Button>
+            </div>
+          </div>
+          
+          <div className="overflow-x-auto">
+            <table className="w-full table-auto">
+              <thead>
+                <tr className="border-b">
+                  <th className="text-left p-2">No</th>
+                  <th className="text-left p-2">Tanggal</th>
+                  <th className="text-left p-2">Waktu Input</th>
+                  <th className="text-left p-2">Terapis</th>
+                  <th className="text-left p-2">Treatment</th>
+                  <th className="text-right p-2">Komisi</th>
+                  <th className="text-center p-2">Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                {currentWeekLogs.length === 0 ? (
+                  <tr>
+                    <td colSpan={7} className="text-center py-8 text-gray-500">
+                      Belum ada data untuk periode ini
+                    </td>
+                  </tr>
+                ) : (
+                  currentWeekLogs.map((log, index) => (
+                    <tr key={log.id} className="border-b hover:bg-gray-50">
+                      <td className="p-2">{index + 1}</td>
+                      <td className="p-2">{log.date}</td>
+                      <td className="p-2">{log.inputTime}</td>
+                      <td className="p-2">{log.treatmentName.split(' ')[0]}</td>
+                      <td className="p-2">{log.treatmentName}</td>
+                      <td className="p-2 text-right">{formatCurrency(log.commission)}</td>
+                      <td className="p-2 text-center">
+                        <Button 
+                          onClick={() => handleDelete(log.id, log.treatmentName, log.date)}
+                          className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition-colors"
+                          size="sm"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white py-4 mt-auto">
+        <div className="container mx-auto px-4">
+          <div className="text-center">
+            <div className="overflow-hidden mb-2">
+              <div className="whitespace-nowrap animate-pulse">
+                JANGAN LUPA FOLLOW INSTAGRAM OREA_85 • JANGAN LUPA FOLLOW INSTAGRAM OREA_85 • JANGAN LUPA FOLLOW INSTAGRAM OREA_85 • 
+              </div>
+            </div>
+            <p className="text-sm">© 2024 OREA 85 - All Rights Reserved</p>
+          </div>
+        </div>
+      </footer>
+
+      {/* Treatment Popup */}
+      {isTreatmentPopupOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl max-w-2xl w-full max-h-[80vh] flex flex-col" ref={popupRef}>
+            <div className="p-6 border-b">
+              <h3 className="text-lg font-semibold mb-4">Pilih Jenis Treatment</h3>
+              <Input 
+                type="text"
+                placeholder="Cari treatment..."
+                value={treatmentSearch}
+                onChange={(e) => setTreatmentSearch(e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent mb-4"
+              />
+            </div>
+            <div className="flex-1 overflow-y-auto p-4">
+              <div className="space-y-2">
+                {filteredTreatments.map((treatment, index) => (
+                  <div 
+                    key={index}
+                    onClick={() => handleTreatmentSelect(treatment)}
+                    className="p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
+                  >
+                    <div className="flex justify-between items-center">
+                      <span className="font-medium">{treatment.name}</span>
+                      <span className="text-green-600 font-semibold">{formatCurrency(treatment.commission)}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="p-4 border-t">
+              <Button 
+                onClick={handlePopupClose}
+                className="w-full bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors"
+              >
+                Tutup
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Share Preview Modal */}
+      {showSharePreview && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl max-w-md w-full p-6" ref={sharePreviewRef}>
+            <h3 className="text-lg font-semibold mb-4">Preview Data</h3>
+            <div className="mb-4 p-4 bg-gray-50 rounded-lg max-h-60 overflow-y-auto">
+              <pre className="text-sm whitespace-pre-wrap">{sharePreviewText}</pre>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <Button onClick={() => shareToWhatsApp(currentWeekLogs)} className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
+                WhatsApp
+              </Button>
+              <Button onClick={() => shareToTelegram(currentWeekLogs)} className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                Telegram
+              </Button>
+              <Button onClick={() => copyToClipboard(currentWeekLogs)} className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700">
+                Copy
+              </Button>
+              <Button onClick={() => setShowSharePreview(false)} className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+                Tutup
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {deleteConfirm && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl max-w-md w-full p-6">
+            <h3 className="text-lg font-semibold mb-4">Konfirmasi Hapus</h3>
+            <p className="mb-6">
+              Apakah Anda yakin ingin menghapus data ini?<br><br>
+              <strong>Tanggal:</strong> {deleteConfirm.date}<br>
+              <strong>Treatment:</strong> {deleteConfirm.treatmentName}<br>
+              <strong>Komisi:</strong> {formatCurrency(logs.find(l => l.id === deleteConfirm.id)?.commission || 0)}
+            </p>
+            <div className="flex gap-2">
+              <Button onClick={confirmDelete} className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+                Hapus
+              </Button>
+              <Button onClick={cancelDelete} className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700">
+                Batal
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
