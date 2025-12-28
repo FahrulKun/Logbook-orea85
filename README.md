@@ -44,15 +44,16 @@ Aplikasi web untuk pencatatan komisi treatment terapis dengan luxury design dan 
 - Form validation
 - Auto-fill harga dan komisi
 
-### 🛠️ Teknologi
-- Framework: Next.js 15.3.5 dengan App Router
-- Language: TypeScript 5
-- Styling: Tailwind CSS 4 dengan shadcn/ui
-- Database: Prisma ORM dengan SQLite
-- UI Components: shadcn/ui component library
-- Icons: Lucide React
-- Date Handling: date-fns
-- State Management: React Hooks
+## 🛠️ Teknologi
+
+- **Framework**: Next.js 15.3.5 dengan App Router
+- **Language**: TypeScript 5
+- **Styling**: Tailwind CSS 4 dengan shadcn/ui
+- **Database**: Prisma ORM dengan SQLite
+- **UI Components**: shadcn/ui component library
+- **Icons**: Lucide React
+- **Date Handling**: date-fns
+- **State Management**: React Hooks
 
 ## 📁 Struktur Proyek
 
@@ -82,7 +83,7 @@ src/
 - Chair Refleksi 1,5 jam : 45.000
 - Chair Refleksi 2 jam : 60.000
 
-### Full Body (FB)
+### Facial Bath (FB)
 - FB 1,5 jam : 52.500
 - FB 2 jam : 67.500
 - FB + Lulur 1,5 jam : 67.500
@@ -137,8 +138,7 @@ Data disimpan di browser localStorage dan akan persist antar session.
 ## 🚀 Cara Menjalankan
 
 ### Prerequisites
-
-- Node.js 18+
+- Node.js 18+ 
 - npm atau yarn
 
 ### Installation
@@ -156,6 +156,7 @@ npx prisma db push
 
 # Run development server
 npm run dev
+```
 
 ### Environment Variables
 ```bash
@@ -164,6 +165,7 @@ cp .env.example .env
 
 # Edit .env file
 DATABASE_URL="file:./dev.db"
+```
 
 ## 🌐 Browser Support
 
@@ -176,8 +178,7 @@ DATABASE_URL="file:./dev.db"
 
 MIT License - OREA 85
 
-🤝 Support
-
+## 🤝 Support
 
 Instagram: @OREA_85
 
