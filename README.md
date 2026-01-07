@@ -1,187 +1,167 @@
-# Catatan Harian Komisi Treatment
 
-Aplikasi web untuk pencatatan komisi treatment terapis dengan luxury design dan fitur lengkap.
+# 📱 Komisi Treatment App
 
-## 🚀 Fitur
+Aplikasi pencatatan komisi treatment therapist yang modern dengan fitur PWA (Progressive Web App).
 
-### ⏰ Waktu & Tanggal
-- Real-time clock dengan zona waktu WIB (GMT+7)
-- Auto-update tanggal tengah malam
-- Record waktu input untuk setiap entry
-- Timezone handling yang akurat
+## 🌟 Fitur Utama
 
-### 📊 Data Management
-- 35+ jenis treatment dengan harga dan komisi otomatis
-- Input data yang mudah dan cepat
-- Statistik harian dan bulanan
-- Data persistence dengan localStorage
-- Auto-calculate komisi
+### 📝 Manajemen Komisi
+- **Input Data**: Form lengkap dengan pilihan treatment
+- **Real-time Clock**: Jam digital WIB (GMT+7) yang update otomatis
+- **Auto Date Management**: Pergantian tanggal tengah malam otomatis
+- **Tracking Waktu**: Mencatat waktu input setiap entry
+- **35 Treatment Options**: Lengkap dengan harga komisi yang sudah ditetapkan
 
-### 📈 Statistik & Analisis
-- Total treatment hari ini
-- Total komisi hari ini
-- Total treatment bulan ini
-- Total komisi bulan ini
-- Most frequent treatment dengan marquee effect
+### 📊 Dashboard & Analytics
+- **Weekly Statistics**: Total komisi mingguan dengan grafik
+- **Daily Logs**: Tabel data harian dengan filter dan sorting
+- **Export Data**: Export ke CSV dan share ke WhatsApp/Telegram
+- **Delete Management**: Hapus data dengan konfirmasi
+- **Search & Filter**: Pencarian data berdasarkan tanggal dan treatment
 
-### 💾 Export & Share
-- Share data ke WhatsApp
-- Share data ke Telegram
-- Copy to clipboard
-- Export ke CSV
-- Preview data sebelum share
+### 🎨 PWA Features
+- **Install to Home Screen**: Bisa diinstall sebagai aplikasi
+- **Offline Support**: Berfungsi tanpa koneksi internet
+- **Push Notifications**: Notifikasi untuk pembaruan
+- **Cache Management**: Optimasi loading dengan cache strategy
+- **Responsive Design**: Berfungsi di semua device
 
-### 🎨 UI/UX Design
-- Luxury dan minimalist design
-- Smooth animations dan transitions
-- Responsive design
-- Loading states dan error handling
-- Toast notifications
+### 🌐 Teknologi
+- **Framework**: Next.js 15 dengan App Router
+- **Styling**: Tailwind CSS dengan shadcn/ui components
+- **Language**: TypeScript untuk type safety
+- **State Management**: React hooks dengan localStorage
+- **Icons**: Custom PWA icons dengan design modern
+- **Timezone**: WIB (GMT+7) untuk akurasi waktu Indonesia
 
-### 🗑️ Data Management
-- Delete confirmation popup
-- Scroll position preservation
-- Form validation
-- Auto-fill harga dan komisi
+## 📱 Treatment List
 
-## 🛠️ Teknologi
+### 🪑 Chair Refleksi
+- 1 jam: Rp 30.000
+- 1,5 jam: Rp 45.000
+- 2 jam: Rp 60.000
 
-- **Framework**: Next.js 15.3.5 dengan App Router
-- **Language**: TypeScript 5
-- **Styling**: Tailwind CSS 4 dengan shadcn/ui
-- **Database**: Prisma ORM dengan SQLite
-- **UI Components**: shadcn/ui component library
-- **Icons**: Lucide React
-- **Date Handling**: date-fns
-- **State Management**: React Hooks
+### 💆 Full Body (FB)
+- FB 1,5 jam: Rp 52.500
+- FB 2 jam: Rp 67.500
+- FB + Lulur: 1,5 jam: Rp 67.500 | 2 jam: Rp 82.500
+- FB + Totok Wajah: 1,5 jam: Rp 61.500 | 2 jam: Rp 76.500
+- FB + Kerokan: 1,5 jam: Rp 61.500 | 2 jam: Rp 76.500
+- FB + Refleksi: 1,5 jam: Rp 61.500 | 2 jam: Rp 76.500
 
-## 📁 Struktur Proyek
+### 🎯 Sport Massage
+- 1 jam: Rp 45.000
+- 1,5 jam: Rp 58.500
 
-```
-src/
-├── app/
-│   ├── page.tsx              # Halaman utama aplikasi
-│   ├── layout.tsx            # Root layout dengan metadata
-│   ├── globals.css           # Global styles
-│   └── api/                 # API routes
-│       ├── route.ts          # Main API endpoint
-│       └── logs/
-│           ├── route.ts      # Logs CRUD operations
-│           └── [id]/
-│               └── route.ts  # Delete log by ID
-├── components/
-│   └── ui/                 # shadcn/ui components
-└── lib/
-    ├── db.ts               # Database client
-    └── utils.ts           # Utility functions
-```
+### 🤰 Prenatal
+- Prenatal 1,5 jam: Rp 67.500
+- Prenatal 2 jam: Rp 76.500
+- Prenatal + Lulur: 1,5 jam: Rp 75.000 | 2 jam: Rp 93.750
 
-## 🎯 Jenis Treatment
+### 👶 Post Natal & Laktasi
+- Post Natal 1 jam: Rp 52.500
+- Pijat Laktasi 30 menit: Rp 45.000
+- Bengkung 30 menit: Rp 37.500
+- Post Natal Paket 2 jam: Rp 127.500
 
-### Chair Refleksi
-- Chair Refleksi 1 jam : 30.000
-- Chair Refleksi 1,5 jam : 45.000
-- Chair Refleksi 2 jam : 60.000
+### 💆 Specialized Treatments
+- Brazilian Lympatic: 1 jam: Rp 157.750 | 1,5 jam: Rp 228.750
+- Facial Lympatic: 30 menit: Rp 52.500
+- Manual Lympatic: 1 jam: Rp 116.250
 
-### Facial Bath (FB)
-- FB 1,5 jam : 52.500
-- FB 2 jam : 67.500
-- FB + Lulur 1,5 jam : 67.500
-- FB + Lulur 2 jam : 82.500
-- FB + Totok Wajah 1,5 jam : 61.500
-- FB + Totok Wajah 2 jam : 76.500
-- FB + Kerokan 1,5 jam : 61.500
-- FB + Kerokan 2 jam : 76.500
-- FB + Refleksi 1,5 jam : 61.500
-- FB + Refleksi 2 jam : 76.500
+### ➕ Add-on Services
+- Add on FB: 30 menit: Rp 16.500 | 1 jam: Rp 33.500
+- Add on Lulur: 30 menit: Rp 30.000
+- Add on Totok Wajah: 30 menit: Rp 24.000
+- Add on Kerokan: 30 menit: Rp 24.000
+- Add on Refleksi FB: 30 menit: Rp 24.000
+- Add on Refleksi Chair: 30 menit: Rp 18.000
 
-### Sport Massage
-- Sport Massage 1 jam : 45.000
-- Sport Massage 1,5 jam : 58.500
+## 🚀 Cara Install & Penggunaan
 
-### Prenatal & Post Natal
-- Prenatal 1,5 jam : 67.500
-- Prenatal 2 jam : 76.500
-- Prenatal + Lulur 1,5 jam : 75.000
-- Prenatal + Lulur 2 jam : 93.750
-- Post Natal 1 jam : 52.500
-- Pijat Laktasi 30 menit : 45.000
-- Bengkung 30 menit : 37.500
-- Post Natal Paket 2 jam : 127.500
+### 1. **Install ke Home Screen**
+1. Buka aplikasi di browser (Chrome, Edge, Firefox, Safari)
+2. Klik tombol "Install" atau "Install Aplikasi"
+3. Aplikasi akan terinstall di home screen device
+4. Icon aplikasi akan muncul di home screen
 
-### Lympatic Drainage
-- Brazilian Lympatic 1 jam : 157.750
-- Brazilian Lympatic 1,5 jam : 228.750
-- Facial Lympatic 30 menit : 52.500
-- Manual Lympatic 1 jam : 116.250
+### 2. **Akses Offline**
+1. Aplikasi akan berfungsi tanpa koneksi internet
+2. Data tersimpan di browser device
+3. Sinkronisasi otomatis saat koneksi tersedia
 
-### Add On Services
-- Add on FB 30 menit : 16.500
-- Add on FB 1 jam : 33.500
-- Add on Lulur 30 menit : 30.000
-- Add on Totok Wajah 30 menit : 24.000
-- Add on Kerokan 30 menit : 24.000
-- Add on Refleksi FB 30 menit : 24.000
-- Add on Refleksi Chair 30 menit : 18.000
+### 3. **PWA Features**
+- **App Shortcuts**: Akses cepat ke fitur utama
+- **Background Sync**: Data sinkron di background
+- **Push Notifications**: Notifikasi untuk update penting
 
-## 🔧 Konfigurasi
+## 📊 Data Management
 
-### WIB Timezone
-Aplikasi menggunakan zona waktu WIB (GMT+7) untuk semua fungsi tanggal dan waktu.
+### **Export Options**
+- **CSV Export**: Unduh data dalam format CSV
+- **WhatsApp Share**: Bagikan data ke WhatsApp
+- **Telegram Share**: Bagikan data ke Telegram
+- **Copy to Clipboard**: Salin data ke clipboard
 
-### Komisi Otomatis
-Komisi dihitung otomatis sesuai dengan harga treatment yang telah ditetapkan.
+### **Security & Privacy**
+- Data tersimpan lokal di browser device
+- Tidak ada data yang dikirim ke server eksternal
+- Full privacy compliance
 
-### Data Storage
-Data disimpan di browser localStorage dan akan persist antar session.
+## 🛠️ Developer Information
 
-## 🚀 Cara Menjalankan
+- **Developer**: OREA 85
+- **Version**: 1.0.0
+- **License**: Private
+- **Contact**: Instagram: @orea_85
+- **GitHub**: https://github.com/orea-85/komisi-treatment-app
 
-### Prerequisites
-- Node.js 18+ 
-- npm atau yarn
+## 📱 Cara Deployment
 
-### Installation
+### **Development**
 ```bash
 # Clone repository
-git clone https://github.com/FahrulKun/Logbook-orea85.git
-cd Logbook-orea85
+git clone https://github.com/orea-85/komisi-treatment-app.git
 
 # Install dependencies
+cd komisi-treatment-app
 npm install
-
-# Setup database
-npx prisma generate
-npx prisma db push
 
 # Run development server
 npm run dev
 ```
 
-### Environment Variables
+### **Production**
 ```bash
-# Copy .env.example ke .env
-cp .env.example .env
+# Build aplikasi
+npm run build
 
-# Edit .env file
-DATABASE_URL="file:./dev.db"
+# Deploy ke Vercel (recommended)
+npm install -g vercel
+vercel --prod
+
+# Atau deploy ke Netlify
+npm install -g netlify
+netlify deploy --prod --dir=.next
 ```
 
-## 🌐 Browser Support
+## 📄 Fitur PWA Compliance
 
-- Chrome 80+
-- Firefox 75+
-- Safari 13+
-- Edge 80+
+✅ **Install Prompt**: Muncul di browser yang mendukung PWA
+✅ **Service Worker**: Background sync dan cache management
+✅ **Manifest Lengkap**: Semua metadata PWA yang diperlukan
+✅ **Icons**: Semua ukuran yang diperlukan App Store
+✅ **Splash Screens**: Untuk berbagai orientasi device
+✅ **Offline Fallback**: Halaman informatif saat offline
 
-## 📄 License
+## 🎯 Target Platform
 
-MIT License - OREA 85
-
-## 🤝 Support
-
-Instagram: @OREA_85
+- **Desktop**: Browser modern dengan PWA support
+- **Mobile**: Install sebagai aplikasi home screen
+- **Tablet**: Responsive design untuk semua ukuran
+- **Progressive**: Meningkat dari web ke native app experience
 
 ---
 
-**OREA 85 - Luxury Treatment Center**
+📱 **Dikembangkan dengan ❤️ oleh OREA 85**
+📞 **Untuk therapist Indonesia yang modern dan produktif**# Logbook-orea85
